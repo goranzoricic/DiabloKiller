@@ -36,7 +36,9 @@ public class CharacterResources : MonoBehaviour {
 			health = maxHealth;
 		}
         // Notify HUD
-        hudManager.PickupHealth(health);
+		if (hudManager != null) {
+			hudManager.PickupHealth (health);
+		}
     }
 
 	public void ReceiveDamage(long damageToReceive) 
@@ -57,7 +59,9 @@ public class CharacterResources : MonoBehaviour {
         }
 
         // Notify HUD
-        hudManager.TakeDamage(health);
+		if (hudManager != null) {
+			hudManager.TakeDamage (health);
+		}
 	}
 
 	public void Die()
