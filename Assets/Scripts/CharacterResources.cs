@@ -51,8 +51,9 @@ public class CharacterResources : MonoBehaviour {
 
 		// decrease health
 		health = health - damageToReceive;
-		// if health <= 0, character is dead
-		Die ();
+        if (health <= 0) {
+            Die();
+        }
 
         // Notify HUD
         hudManager.TakeDamage(health);
@@ -60,8 +61,18 @@ public class CharacterResources : MonoBehaviour {
 
 	public void Die()
 	{
+		Debug.LogFormat("Die!");
 		// if character is dead, set health to 0
 		health = 0;
+
+		// rotate cylinder on death
+		transform.Rotate (0, 90, 0);
+		// stop cylinder movement
+		NavMeshAgent nma = gameObject.GetComponent<NavMeshAgent> ();
+		nma.Stop ();
+		// forbid cylinder movement
+		ClickToMove clickToMove = gameObject.GetComponent<ClickToMove> ();
+		clickToMove.onDeath ( false );
 	}
 
 	public void ReceiveMana(long manaToReceive)	

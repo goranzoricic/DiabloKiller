@@ -7,6 +7,8 @@ public class ClickToMove : MonoBehaviour {
 
 	private NavMeshAgent navMeshAgent;
 
+	private bool movementAllowed = true;
+
 
 	// Use this for initialization
 	void Start () {
@@ -15,7 +17,7 @@ public class ClickToMove : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (navMeshAgent == null) {
+		if (navMeshAgent == null || movementAllowed != true) {
 			return;
 		}
 		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
@@ -33,4 +35,9 @@ public class ClickToMove : MonoBehaviour {
 			navMeshAgent.Stop();
 		}
 	} 
+
+	public void onDeath(bool shouldMove){
+		movementAllowed = shouldMove;
+	}
+
 }
