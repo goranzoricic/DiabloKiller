@@ -17,7 +17,14 @@ public class ClickToMove : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (navMeshAgent == null || movementAllowed != true) {
+		if (movementAllowed != true) {
+			// rotate cylinder on death
+			Transform t = gameObject.transform;
+			t.Rotate (90f, 0f, 0f);
+			return;
+		}
+
+		if (navMeshAgent == null) {
 			return;
 		}
 		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
@@ -38,6 +45,9 @@ public class ClickToMove : MonoBehaviour {
 
 	public void onDeath(bool shouldMove){
 		movementAllowed = shouldMove;
+
+		Renderer renderer = gameObject.GetComponent<Renderer> ();
+		renderer.material.color = Color.red;
 	}
 
 }
