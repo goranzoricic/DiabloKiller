@@ -40,12 +40,15 @@ public class CharacterResources : MonoBehaviour {
 
 		// decrease health
 		health = health - damageToReceive;
-		// if health <= 0, character is dead
-		Die ();
+        // if health <= 0, character is dead
+        if (health <= 0) {
+            Die();
+        }
 	}
 
 	public void Die()
 	{
+        Debug.LogError("Die!");
 		// if character is dead, set health to 0
 		health = 0;
 	}
