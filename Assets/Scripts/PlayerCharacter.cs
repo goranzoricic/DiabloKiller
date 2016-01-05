@@ -2,7 +2,8 @@
 using System.Collections;
 
 public class PlayerCharacter : Character {
-	
+	public Camera playerCamera;
+
 	// Use this for initialization
 	void Start () {
 		navMeshAgent = gameObject.GetComponent<NavMeshAgent> ();
@@ -21,7 +22,7 @@ public class PlayerCharacter : Character {
 		if (navMeshAgent == null) {
 			return;
 		}
-		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+		Ray ray = playerCamera.ScreenPointToRay (Input.mousePosition);
 		RaycastHit hit;
 		if (Input.GetButton("Fire1")) {
 			if (Physics.Raycast(ray, out hit, 100))	{
