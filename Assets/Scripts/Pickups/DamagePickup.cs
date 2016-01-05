@@ -7,6 +7,10 @@ public class DamagePickup : Pickup
 
     public override void OnTriggerEnter(Collider other)
     {
+        if (!CanPickup(other)) {
+            return;
+        }
+
         Debug.LogFormat("Damage received by {0}, ammount: {1}", other.gameObject.name, DamageAmmount);
         base.OnTriggerEnter(other);
 

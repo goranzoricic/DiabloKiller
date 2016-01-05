@@ -7,6 +7,10 @@ public class ManaPickup : Pickup
 
     public override void OnTriggerEnter(Collider other)
     {
+        if (!CanPickup(other)) {
+            return;
+        }
+
         Debug.LogFormat("Mana received by {0}, ammount: {1}", other.gameObject.name, ManaAmmount);
         base.OnTriggerEnter(other);
 
