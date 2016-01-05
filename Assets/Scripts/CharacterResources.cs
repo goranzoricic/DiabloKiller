@@ -68,12 +68,9 @@ public class CharacterResources : MonoBehaviour {
 		// if character is dead, set health to 0
 		health = 0;
 
-		// stop cylinder movement
-		NavMeshAgent nma = gameObject.GetComponent<NavMeshAgent> ();
-		nma.Stop ();
 		// forbid cylinder movement
 		Character character = gameObject.GetComponent<Character> ();
-		character.onDeath ( false );
+		character.onDeath ();
 	}
 
 	public void ReceiveMana(long manaToReceive)	
