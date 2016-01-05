@@ -86,9 +86,8 @@ public class PlayerCharacter : Character {
 	void Update () {
 		if (movementAllowed != true) {
             navMeshAgent.Stop();
-            // rotate cylinder on death
-            Transform t = gameObject.transform;
-			t.Rotate (90f, 0f, 0f);
+            destination = transform.position;
+            body.velocity = Vector3.zero;
 			return;
 		}
 		Move();		
@@ -105,6 +104,10 @@ public class PlayerCharacter : Character {
 
 	public override void onDeath(){
 		movementAllowed = false;
+
+        // rotate cylinder on death
+        Transform t = gameObject.transform;
+        t.Rotate (90f, 0f, 0f);
 		
 		Renderer renderer = gameObject.GetComponent<Renderer> ();
 		renderer.material.color = Color.red;

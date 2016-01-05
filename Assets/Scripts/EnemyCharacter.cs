@@ -15,9 +15,6 @@ public class EnemyCharacter : Character {
 	void Update () {
 
 		if (movementAllowed != true) {
-			// rotate cylinder on death
-			Transform t = gameObject.transform;
-			t.Rotate (90f, 0f, 0f);
 			return;
 		}
 
@@ -35,6 +32,9 @@ public class EnemyCharacter : Character {
 	public override void onDeath(){
 		movementAllowed = false;
 
+        // rotate cylinder on death
+        Transform t = gameObject.transform;
+        t.Rotate (90f, 0f, 0f);
 		//Renderer renderer = gameObject.GetComponent<Renderer> ();
 		//renderer.material.color = Color.red;
 	}
