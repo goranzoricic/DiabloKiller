@@ -3,17 +3,26 @@ using System.Collections;
 
 public class CharacterResources : MonoBehaviour {
 
-	public long health = 100;
-	public long maxHealth = 200;
-	public long mana = 100;
-	public long maxMana = 200;
+	public long maxHealth = 100;
+    public long health = 100;
+    public long mana = 100;
+	public long maxMana = 100;
 
-	public void ReceiveHealth(long healthToReceive) 
+    public HUDManager hudManager;
+
+    void Awake()
+    {
+        // Setting up the references.
+        hudManager = GetComponent<HUDManager>();
+    }
+
+    public void ReceiveHealth(long healthToReceive) 
 	{
 		// if healthToReceive is < 0, error, use recieve damage
 		if (healthToReceive < 0) {
 			return;
 		}
+
 		// if character is already dead, don't change health
 		if (health <= 0) {
 			return;
@@ -25,7 +34,9 @@ public class CharacterResources : MonoBehaviour {
 		if (health > maxHealth) {
 			health = maxHealth;
 		}
-	}
+        // Notify HUD
+        hudManager.PickupHealth(health);
+    }
 
 	public void ReceiveDamage(long damageToReceive) 
 	{
@@ -42,6 +53,9 @@ public class CharacterResources : MonoBehaviour {
 		health = health - damageToReceive;
 		// if health <= 0, character is dead
 		Die ();
+
+        // Notify HUD
+        hudManager.TakeDamage(health);
 	}
 
 	public void Die()
@@ -80,6 +94,4 @@ public class CharacterResources : MonoBehaviour {
 		}
 
 	}
-
-
 }
