@@ -13,7 +13,8 @@ public class CharacterResources : MonoBehaviour {
     void Awake()
     {
         // Setting up the references.
-        hudManager = GetComponent<HUDManager>();
+        //hudManager = GetComponent<HUDManager>();
+        //Debug.LogFormat("HUD manager assigned {0}", hudManager);
     }
 
     public void ReceiveHealth(long healthToReceive) 

@@ -13,8 +13,7 @@ public class HUDManager : MonoBehaviour {
     Animator anim;                                              // Reference to the Animator component.
     AudioSource playerAudio;                                    // Reference to the AudioSource component.
     CharacterResources playerResources;                         // Reference to player resources script
-    bool isDead;                                                // Whether the player is dead.
-    bool damaged;                                               // True when the player gets damaged.
+    bool damaged = false;                                       // True when the player gets damaged.
 
     // Use this for initialization
     void Start() {
@@ -24,7 +23,7 @@ public class HUDManager : MonoBehaviour {
     void Awake() {
         // Setting up the references.
         anim = GetComponent<Animator>();
-        playerAudio = GetComponent<AudioSource>();
+        //playerAudio = GetComponent<AudioSource>();
         playerResources = GetComponentInChildren<CharacterResources>();
     }
 
@@ -48,9 +47,6 @@ public class HUDManager : MonoBehaviour {
 
     public void Death()
     {
-        // Set the death flag so this function won't be called again.
-        isDead = true;
-
         // Turn off any remaining shooting effects.
         //playerShooting.DisableEffects();
 
