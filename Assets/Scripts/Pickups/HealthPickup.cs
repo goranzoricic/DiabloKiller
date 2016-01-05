@@ -6,6 +6,10 @@ public class HealthPickup : Pickup {
 
     public override void OnTriggerEnter(Collider other)
     {
+        if (!CanPickup(other)) {
+            return;
+        }
+
         Debug.LogFormat("Health received by {0}, ammount: {1}", other.gameObject.name, HealthAmmount);
         base.OnTriggerEnter(other);
 
