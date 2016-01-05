@@ -5,7 +5,7 @@ public class CharacterResources : MonoBehaviour {
 
 	public long maxHealth = 100;
     public long health = 100;
-    public long mana = 100;
+    public long mana = 50;
 	public long maxMana = 100;
 
     public HUDManager hudManager;
@@ -57,7 +57,7 @@ public class CharacterResources : MonoBehaviour {
         }
 
         // Notify HUD
-        hudManager.TakeDamage(health);
+        hudManager.ReceiveDamage(health);
 	}
 
 	public void Die()
@@ -87,9 +87,12 @@ public class CharacterResources : MonoBehaviour {
 		if (mana > maxMana) {
 			mana = maxMana;
 		}
-	}
 
-	public void SpendMana(long manaToSpend)
+        // Notify HUD
+        hudManager.ReceiveMana(mana);
+    }
+
+    public void SpendMana(long manaToSpend)
 	{
 		// if manaToLoose < 0, error, use RecieveMana
 		if (manaToSpend < 0) {
