@@ -8,13 +8,10 @@ public class CharacterResources : MonoBehaviour {
     public long mana = 50;
 	public long maxMana = 100;
 
-    public HUDManager hudManager;
+	public HUDManager hudManager;
 
     void Awake()
     {
-        // Setting up the references.
-        //hudManager = GetComponent<HUDManager>();
-        //Debug.LogFormat("HUD manager assigned {0}", hudManager);
     }
 
     public void ReceiveHealth(long healthToReceive) 
@@ -59,7 +56,9 @@ public class CharacterResources : MonoBehaviour {
         }
 
         // Notify HUD
-        hudManager.ReceiveDamage(health);
+		if (hudManager != null) {
+			hudManager.ReceiveDamage(health);
+		}
 	}
 
 	public void Die()
@@ -88,7 +87,9 @@ public class CharacterResources : MonoBehaviour {
 		}
 
         // Notify HUD
-        hudManager.ReceiveMana(mana);
+		if (hudManager != null) {
+			hudManager.ReceiveMana(mana);
+		}
     }
 
     public void SpendMana(long manaToSpend)
