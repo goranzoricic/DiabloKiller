@@ -21,5 +21,10 @@ public class ManaPickup : Pickup
     {
         Debug.LogFormat("Mana received by {0}, ammount: {1}", other.gameObject.name, ManaAmmount);
         base.OnTriggerEnter(other);
+
+		CharacterResources characterResources = other.GetComponent<CharacterResources> ();
+		characterResources.ReceiveMana (ManaAmmount);
+		
+		Debug.LogFormat("Current Mana: {0}", characterResources.mana);
     }
 }

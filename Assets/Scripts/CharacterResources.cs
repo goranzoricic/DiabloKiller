@@ -50,14 +50,14 @@ public class CharacterResources : MonoBehaviour {
 		health = 0;
 	}
 
-	public void RecieveMana(long manaToRecieve)	
+	public void ReceiveMana(long manaToReceive)	
 	{
-		// if manaToRecieve < 0, error, use SpendMana
-		if (manaToRecieve < 0) {
+		// if manaToReceive < 0, error, use SpendMana
+		if (manaToReceive < 0) {
 			return;
 		}
 
-		mana = mana + manaToRecieve;
+		mana = mana + manaToReceive;
 
 		// if mana is oever maxMana, reduce it to maxMana
 		if (mana > maxMana) {
