@@ -32,8 +32,8 @@ public class EnemyCharacter : Character {
 
 	} 
 
-	public override void onDeath(bool shouldMove){
-		movementAllowed = shouldMove;
+	public override void onDeath(){
+		movementAllowed = false;
 
 		//Renderer renderer = gameObject.GetComponent<Renderer> ();
 		//renderer.material.color = Color.red;

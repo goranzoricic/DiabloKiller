@@ -11,8 +11,9 @@ public class PlayerCharacter : Character {
 	// Update is called once per frame
 	void Update () {
 		if (movementAllowed != true) {
-			// rotate cylinder on death
-			Transform t = gameObject.transform;
+            navMeshAgent.Stop();
+            // rotate cylinder on death
+            Transform t = gameObject.transform;
 			t.Rotate (90f, 0f, 0f);
 			return;
 		}
@@ -36,8 +37,8 @@ public class PlayerCharacter : Character {
 		}
 	} 
 	
-	public override void onDeath(bool shouldMove){
-		movementAllowed = shouldMove;
+	public override void onDeath(){
+		movementAllowed = false;
 		
 		Renderer renderer = gameObject.GetComponent<Renderer> ();
 		renderer.material.color = Color.red;

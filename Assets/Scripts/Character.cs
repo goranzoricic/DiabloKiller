@@ -16,6 +16,6 @@ public abstract class Character : MonoBehaviour {
 
 	}
 
-	public abstract void onDeath(bool allowMovement);
+	public abstract void onDeath();
 
 }
