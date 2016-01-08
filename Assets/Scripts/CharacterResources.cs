@@ -25,8 +25,11 @@ public class CharacterResources : MonoBehaviour {
 		if (health <= 0) {
 			return;
 		}
+
+		Debug.LogFormat("Player health before health pickup: " + health);
 		// increase health
 		health = health + healthToReceive;
+		Debug.LogFormat("Player health after health pickup: " + health);
 
 		// if health is above max, set it to max
 		if (health > maxHealth) {
