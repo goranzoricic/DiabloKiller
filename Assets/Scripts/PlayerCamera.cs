@@ -7,7 +7,6 @@ public class PlayerCamera : MonoBehaviour {
 
 	//private Vector3 offset;
 	Vector3 position = new Vector3(0, 12, -8);
-	Quaternion rotation = Quaternion.Euler(45, 0, 0);
 	// Use this for initialization
 	void Start () {
 		GameObject main = GameObject.Find("Main Camera");
