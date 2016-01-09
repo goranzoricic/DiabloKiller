@@ -6,17 +6,19 @@ public abstract class Character : MonoBehaviour {
 	[HideInInspector]
 	public NavMeshAgent navMeshAgent;
 
-	public float MinDistance = 0.01f;
-	public float MovementSpeed = 3000f;
-
 	public bool movementAllowed = true;
 
+    private ActionController actionController;
+
 	// Use this for initialization
-	void Start () {
+	public virtual void Start () {
+        actionController = new ActionController(this);
+    }
 
-	}
+    public virtual void Update() {
+    }
 
-	public abstract void onDeath();
+    public abstract void onDeath();
 
 	protected float PathLength(NavMeshPath path) {
 		if (path.corners.Length < 2)

@@ -15,8 +15,8 @@ public class PlayerCharacter : Character {
 	private float LastContactTime = 0.0f;
 	private bool stoppedDueToCollision = false;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    public override void Start () {
 		navMeshAgent = gameObject.GetComponent<NavMeshAgent> ();
 		navPath = new NavMeshPath();
 		destination = transform.position;
@@ -83,7 +83,8 @@ public class PlayerCharacter : Character {
 	}
 
 	// Update is called once per frame
-	void Update () {
+	public override void Update () {
+        base.Update();
 		if (movementAllowed != true) {
             navMeshAgent.Stop();
             destination = transform.position;
