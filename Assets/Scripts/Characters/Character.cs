@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public abstract class Character : MonoBehaviour {
@@ -9,16 +9,24 @@ public abstract class Character : MonoBehaviour {
 	public bool movementAllowed = true;
 
     private ActionController actionController;
+    private AbilityController abilityController;
 
-	// Use this for initialization
-	public virtual void Start () {
+
+    // Use this for initialization
+    public virtual void Start () {
         actionController = new ActionController(this);
+        abilityController = new AbilityController(this);
     }
 
     public virtual void Update() {
+        actionController.Update();
+        abilityController.Update();
     }
 
-    public abstract void onDeath();
+    public virtual void OnDeath() {
+        abilityController.OnDeath();
+        actionController.OnDeath();
+    }
 
 	protected float PathLength(NavMeshPath path) {
 		if (path.corners.Length < 2)
@@ -35,5 +43,4 @@ public abstract class Character : MonoBehaviour {
 		}
 		return lengthSoFar;
 	}
-
 }

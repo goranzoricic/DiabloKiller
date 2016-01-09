@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 
 
 public enum ActionResult {
@@ -15,6 +15,12 @@ public enum ActionResult {
 // handle that.
 
 public class Action {
+    private Character owner;
+
+    public Action(Character owningCharacter) {
+        owner = owningCharacter;
+    }
+
     public void Start() {
     }
 

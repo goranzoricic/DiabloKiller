@@ -1,22 +1,22 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class ActionController {
-    private Action CurrentAction;
+    private Action currentAction;
     private Character owner;
 
     public ActionController(Character owningCharacter) {
         owner = owningCharacter;
-    } 
+    }
 
-	// Update is called once per frame
-	void Update () {
-	    if (CurrentAction != null) {
-            ActionResult result = CurrentAction.Update();
+    // Update is called once per frame
+    public void Update () {
+	    if (currentAction != null) {
+            ActionResult result = currentAction.Update();
             switch (result) {
                 case ActionResult.Completed_Fail :
                 case ActionResult.Completed_Success : {
-                        CurrentAction = null;
+                        currentAction = null;
                         break;
                 }
                 case ActionResult.Continue : {
@@ -30,11 +30,14 @@ public class ActionController {
         }
 	}
 
-    void StartAction(Action newAction) {
-        if (CurrentAction != null) {
-            CurrentAction.Stop();
+    public void StartAction(Action newAction) {
+        if (currentAction != null) {
+            currentAction.Stop();
         }
-        CurrentAction = newAction;
-        CurrentAction.Start();
+        currentAction = newAction;
+        currentAction.Start();
     }
+    public void OnDeath() {
+    }
+
 };

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class EnemyCharacter : Character {
@@ -29,7 +29,7 @@ public class EnemyCharacter : Character {
 
 	} 
 
-	public override void onDeath(){
+	public override void OnDeath(){
 		movementAllowed = false;
 
         // rotate cylinder on death
