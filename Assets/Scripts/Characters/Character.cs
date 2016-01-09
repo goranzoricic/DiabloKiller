@@ -10,17 +10,20 @@ public abstract class Character : MonoBehaviour {
 
     private ActionController actionController;
     private AbilityController abilityController;
+    private BuffController buffController;
 
 
     // Use this for initialization
     public virtual void Start () {
         actionController = new ActionController(this);
         abilityController = new AbilityController(this);
+        buffController = new BuffController(this);
     }
 
     public virtual void Update() {
         actionController.Update();
         abilityController.Update();
+        buffController.Update();
     }
 
     public virtual void OnDeath() {
