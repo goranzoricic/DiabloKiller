@@ -1,10 +1,16 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class PlayerCharacter : Character {
-	public Camera playerCamera;
 
-	private NavMeshPath navPath;
+    /**
+     *  Variables
+     */
+    public HUDManager HUDManager;
+    public Camera PlayerCamera;
+    [HideInInspector] public CharacterStats characterStats;
+
+    private NavMeshPath navPath;
 	private Vector3 destination;
 	private Rigidbody body;
 
@@ -15,23 +21,34 @@ public class PlayerCharacter : Character {
 	private float LastContactTime = 0.0f;
 	private bool stoppedDueToCollision = false;
 
-	// Use this for initialization
-	void Start () {
+
+    /**
+     *  Unity Extended Methods
+     */
+
+    // Use this for initialization
+    void Start () {
 		navMeshAgent = gameObject.GetComponent<NavMeshAgent> ();
 		navPath = new NavMeshPath();
 		destination = transform.position;
 		body = gameObject.GetComponent<Rigidbody>();
-	}
+        characterStats = gameObject.GetComponent<CharacterStats>();
+    }
 
-	// Moves the character towards the last clicked location. Finds the navigation path to the target, but won't use it if
-	// it is much longer than the linear distance to the destination. This is a copy of Diablo 3 movement, and the reasoning
-	// is that the player has to guide the character around obstacles, while not requiring the player to be absolutely
-	// precise while moving.
-	void Move() {
+    void Awake() {
+        //characterStats.HUDManager = HUDManager;
+        //HUDManager.Init(characterStats.MaxHealth, characterStats.MaxMana);
+    }
+
+    // Moves the character towards the last clicked location. Finds the navigation path to the target, but won't use it if
+    // it is much longer than the linear distance to the destination. This is a copy of Diablo 3 movement, and the reasoning
+    // is that the player has to guide the character around obstacles, while not requiring the player to be absolutely
+    // precise while moving.
+    void Move() {
 		if (navMeshAgent == null) {
 			return;
 		}
-		Ray ray = playerCamera.ScreenPointToRay (Input.mousePosition);
+		Ray ray = PlayerCamera.ScreenPointToRay (Input.mousePosition);
 		RaycastHit hit;
 		if (Input.GetButton("Fire1")) {
 			if (Physics.Raycast(ray, out hit, 100) && !hit.collider.CompareTag("Player")) {
@@ -91,10 +108,12 @@ public class PlayerCharacter : Character {
 			return;
 		}
 		Move();		
-	} 
+	}
 
-
-	public virtual void OnTriggerEnter(Collider other)
+    /**
+     *  Public Methods
+     */
+    public virtual void OnTriggerEnter(Collider other)
 	{
 		if (!useNavigation && other.tag == "Wall") {
 			LastContactTime = Time.time;
@@ -112,5 +131,9 @@ public class PlayerCharacter : Character {
 		Renderer renderer = gameObject.GetComponent<Renderer> ();
 		renderer.material.color = Color.red;
 	}
-	
+
+    public CharacterStats CharacterStats() {
+        return characterStats;
+    }
+
 }

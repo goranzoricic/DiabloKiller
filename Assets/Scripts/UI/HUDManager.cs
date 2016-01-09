@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
@@ -9,7 +9,6 @@ public class HUDManager : MonoBehaviour {
     public AudioClip deathClip;                                 // The audio clip to play when the player dies.
     public float flashSpeed = 5f;                               // The speed the damageImage will fade at.
     public Color flashColour = new Color(1f, 0f, 0f, 0.1f);     // The colour the damageImage is set to, to flash.
-
 
     Animator anim;                                              // Reference to the Animator component.
     AudioSource playerAudio;                                    // Reference to the AudioSource component.
@@ -45,6 +44,11 @@ public class HUDManager : MonoBehaviour {
         damaged = false;
     }
 
+    public void Init(long maxHelath, int maxMana) {
+        healthSlider.maxValue = maxHelath;
+        manaSlider.maxValue = maxMana;
+    }
+
 
     public void Death()
     {
@@ -62,7 +66,7 @@ public class HUDManager : MonoBehaviour {
         playerResources.enabled = false;
     }
 
-    public void ReceiveDamage(long currentHealth) {
+    public void TakeDamage(long currentHealth) {
         // Set the damaged flag so the screen will flash.
         //damaged = true;
 
@@ -80,7 +84,7 @@ public class HUDManager : MonoBehaviour {
 
     }
 
-    public void ReceiveMana(long currentMana)
+    public void SetMana(long currentMana)
     {
         // Set the health bar's value to the current health.
         manaSlider.value = currentMana;

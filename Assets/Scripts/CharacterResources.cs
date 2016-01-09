@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class CharacterResources : MonoBehaviour {
@@ -60,7 +60,7 @@ public class CharacterResources : MonoBehaviour {
 
         // Notify HUD
 		if (hudManager != null) {
-			hudManager.ReceiveDamage(health);
+			hudManager.TakeDamage(health);
 		}
 	}
 
@@ -91,7 +91,7 @@ public class CharacterResources : MonoBehaviour {
 
         // Notify HUD
 		if (hudManager != null) {
-			hudManager.ReceiveMana(mana);
+			hudManager.SetMana(mana);
 		}
     }
 

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class ManaPickup : Pickup
 {
-    public long ManaAmmount;
+    public int ManaAmmount;
 
     public override void OnTriggerEnter(Collider other)
     {
@@ -11,12 +11,10 @@ public class ManaPickup : Pickup
             return;
         }
 
-        Debug.LogFormat("Mana received by {0}, ammount: {1}", other.gameObject.name, ManaAmmount);
+        Debug.LogFormat("[ManaPickup.OnTriggerEnter] Mana received by {0}, ammount: {1}", other.gameObject.name, ManaAmmount);
         base.OnTriggerEnter(other);
 
-		CharacterResources characterResources = other.GetComponent<CharacterResources> ();
-		characterResources.ReceiveMana (ManaAmmount);
-		
-		Debug.LogFormat("Current Mana: {0}", characterResources.mana);
+		PlayerCharacter character = other.GetComponent<PlayerCharacter> ();
+		character.CharacterStats().ReceiveMana(ManaAmmount);
     }
 }
