@@ -8,9 +8,9 @@ public abstract class Character : MonoBehaviour {
 
 	public bool movementAllowed = true;
 
-    private ActionController actionController;
-    private AbilityController abilityController;
-    private BuffController buffController;
+    protected ActionController actionController;
+    protected AbilityController abilityController;
+    protected BuffController buffController;
 
 
     // Use this for initialization
@@ -22,14 +22,22 @@ public abstract class Character : MonoBehaviour {
     }
 
     public virtual void Update() {
-        actionController.Update();
         abilityController.Update();
+        actionController.Update();
         buffController.Update();
     }
 
     public virtual void OnDeath() {
         abilityController.OnDeath();
         actionController.OnDeath();
+    }
+
+    public virtual Ability GetUsedAbility() {
+        return null;
+    }
+
+    public virtual void StartAction(Action action) {
+        actionController.StartAction(action);
     }
 
 	protected float PathLength(NavMeshPath path) {

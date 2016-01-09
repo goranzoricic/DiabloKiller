@@ -21,7 +21,6 @@ public class PlayerCharacter : Character {
 	private float LastContactTime = 0.0f;
 	private bool stoppedDueToCollision = false;
 
-
     /**
      *  Unity Extended Methods
      */
@@ -29,17 +28,29 @@ public class PlayerCharacter : Character {
     // Use this for initialization
     public override void Start () {
         base.Start();
+
 		navMeshAgent = gameObject.GetComponent<NavMeshAgent> ();
 		navPath = new NavMeshPath();
 		destination = transform.position;
 		body = gameObject.GetComponent<Rigidbody>();
         characterStats = gameObject.GetComponent<CharacterStats>();
+
+        MeleeAbility cleave = new MeleeAbility(this, "Cleave");
+        abilityController.AddAbility("Primary", cleave);
+        RangedAbility throwWeapon = new RangedAbility(this, "Throw Weapon");
+        abilityController.AddAbility("Secondary", throwWeapon);
+        AreaAbility avalanche = new AreaAbility(this, "Avalanche");
+        abilityController.AddAbility("Ability01", avalanche);
+        SelfCastAbility battleShout = new SelfCastAbility(this, "Battle Shout");
+        abilityController.AddAbility("Ability02", battleShout);
     }
+
 
     void Awake() {
         //characterStats.HUDManager = HUDManager;
         //HUDManager.Init(characterStats.MaxHealth, characterStats.MaxMana);
     }
+
 
     // Moves the character towards the last clicked location. Finds the navigation path to the target, but won't use it if
     // it is much longer than the linear distance to the destination. This is a copy of Diablo 3 movement, and the reasoning
@@ -51,7 +62,7 @@ public class PlayerCharacter : Character {
 		}
 		Ray ray = PlayerCamera.ScreenPointToRay (Input.mousePosition);
 		RaycastHit hit;
-		if (Input.GetButton("Fire1")) {
+		if (Input.GetButton("Primary")) {
 			if (Physics.Raycast(ray, out hit, 100) && !hit.collider.CompareTag("Player")) {
 				if ((destination - hit.point).magnitude > 0.1f) {
 					stoppedDueToCollision = false;
@@ -137,6 +148,10 @@ public class PlayerCharacter : Character {
 
     public CharacterStats CharacterStats() {
         return characterStats;
+    }
+
+    public virtual Ability GetUsedAbility() {
+        return abilityController.GetAbilityFromInput();
     }
 
 }

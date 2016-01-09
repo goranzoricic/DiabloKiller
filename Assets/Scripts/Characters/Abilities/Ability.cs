@@ -15,10 +15,33 @@ using System.Collections;
 // - when the cleave's animation fires the DoDamageNow event, the callback is invoked
 // - the action collects all enemies affected by Cleave, creates a Damage object based on player stats and applies the damage to each enemy
 public class Ability {
+    public string Name;
+
     private Character owner;
 
-    public Ability(Character owningCharacter) {
+    public Ability(Character owningCharacter, string name) {
         owner = owningCharacter;
+        Name = name;
+    }
+
+    public virtual bool CanCastOnPoint(bool ForceStillCast) {
+        return false;
+    }
+
+    public virtual bool CanCastOnCharacter(Character targetCharacter) {
+        return false;
+    }
+
+    public virtual bool CanCastOnSelf() {
+        return false;
+    }
+
+    public virtual void SetTarget(Vector3 target) {
+
+    }
+
+    public virtual void SetTarget(Character target) {
+        
     }
 
     // Use this for initialization

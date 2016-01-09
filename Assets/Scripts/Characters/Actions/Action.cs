@@ -15,7 +15,7 @@ public enum ActionResult {
 // handle that.
 
 public class Action {
-    private Character owner;
+    protected Character owner;
 
     public Action(Character owningCharacter) {
         owner = owningCharacter;
