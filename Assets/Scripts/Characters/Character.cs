@@ -15,6 +15,7 @@ public abstract class Character : MonoBehaviour {
 
     // Use this for initialization
     public virtual void Start () {
+        Debug.LogFormat("[Character.Start] {0}", gameObject.name);
         actionController = new ActionController(this);
         abilityController = new AbilityController(this);
         buffController = new BuffController(this);
