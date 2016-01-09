@@ -1,18 +1,18 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class EnemyCharacter : Character {
 
 	GameObject player;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    public override void Start () {
 		navMeshAgent = gameObject.GetComponent<NavMeshAgent> ();
 		player = GameObject.FindGameObjectWithTag ("Player");
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	public override void Update () {
 
 		if (movementAllowed != true) {
 			return;
@@ -29,7 +29,7 @@ public class EnemyCharacter : Character {
 
 	} 
 
-	public override void onDeath(){
+	public override void OnDeath(){
 		movementAllowed = false;
 
         // rotate cylinder on death

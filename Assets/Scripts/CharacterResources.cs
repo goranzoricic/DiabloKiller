@@ -72,7 +72,7 @@ public class CharacterResources : MonoBehaviour {
 
 		// forbid cylinder movement
 		Character character = gameObject.GetComponent<Character> ();
-		character.onDeath ();
+		character.OnDeath ();
 	}
 
 	public void ReceiveMana(long manaToReceive)	

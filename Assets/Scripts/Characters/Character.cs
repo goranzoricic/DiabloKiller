@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public abstract class Character : MonoBehaviour {
@@ -6,17 +6,30 @@ public abstract class Character : MonoBehaviour {
 	[HideInInspector]
 	public NavMeshAgent navMeshAgent;
 
-	public float MinDistance = 0.01f;
-	public float MovementSpeed = 3000f;
-
 	public bool movementAllowed = true;
 
-	// Use this for initialization
-	void Start () {
+    private ActionController actionController;
+    private AbilityController abilityController;
+    private BuffController buffController;
 
-	}
 
-	public abstract void onDeath();
+    // Use this for initialization
+    public virtual void Start () {
+        actionController = new ActionController(this);
+        abilityController = new AbilityController(this);
+        buffController = new BuffController(this);
+    }
+
+    public virtual void Update() {
+        actionController.Update();
+        abilityController.Update();
+        buffController.Update();
+    }
+
+    public virtual void OnDeath() {
+        abilityController.OnDeath();
+        actionController.OnDeath();
+    }
 
 	protected float PathLength(NavMeshPath path) {
 		if (path.corners.Length < 2)
@@ -33,5 +46,4 @@ public abstract class Character : MonoBehaviour {
 		}
 		return lengthSoFar;
 	}
-
 }

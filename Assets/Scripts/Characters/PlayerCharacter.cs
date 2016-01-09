@@ -27,7 +27,7 @@ public class PlayerCharacter : Character {
      */
 
     // Use this for initialization
-    void Start () {
+    public override void Start () {
 		navMeshAgent = gameObject.GetComponent<NavMeshAgent> ();
 		navPath = new NavMeshPath();
 		destination = transform.position;
@@ -100,7 +100,8 @@ public class PlayerCharacter : Character {
 	}
 
 	// Update is called once per frame
-	void Update () {
+	public override void Update () {
+        base.Update();
 		if (movementAllowed != true) {
             navMeshAgent.Stop();
             destination = transform.position;
@@ -121,7 +122,7 @@ public class PlayerCharacter : Character {
 	}
 
 
-	public override void onDeath(){
+	public override void OnDeath(){
 		movementAllowed = false;
 
         // rotate cylinder on death
