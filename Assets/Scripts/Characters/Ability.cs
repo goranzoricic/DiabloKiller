@@ -22,16 +22,16 @@ public class Ability {
     }
 
     // Use this for initialization
-    public void Start() {
+    public virtual void Start() {
 	
 	}
 
     // Update is called once per frame
-    public void Update () {
+    public virtual void Update () {
 	
 	}
 
-    public void Stop() {
+    public virtual void Stop() {
 
     }
 }

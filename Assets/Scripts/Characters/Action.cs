@@ -21,14 +21,14 @@ public class Action {
         owner = owningCharacter;
     }
 
-    public void Start() {
+    public virtual void Start() {
     }
 
-    public ActionResult Update() {
+    public virtual ActionResult Update() {
         return ActionResult.Completed_Fail;
     }
 
-    public void Stop() {
+    public virtual void Stop() {
 
     }
 }

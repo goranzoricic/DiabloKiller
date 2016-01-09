@@ -17,7 +17,7 @@ public class AbilityController {
     public void UseAbility(string abilityName) {
         Ability ability = abilities[abilityName];
         if (ability == null) {
-            Debug.LogErrorFormat("Character attemted to use an ability it doesn't have: {0}", abilityName);
+            Debug.LogErrorFormat("[AbilityController.UseAbility] Character attemted to use an ability it doesn't have: {0}", abilityName);
             return;
         }
         ability.Start();

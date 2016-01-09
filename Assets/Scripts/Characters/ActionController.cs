@@ -23,7 +23,7 @@ public class ActionController {
                         break;
                 }
                 default : {
-                        Debug.LogError("Invalid action result in action controller");
+                        Debug.LogError("[ActivityController.Update] Invalid action result in action controller");
                         break;
                 }
             }
