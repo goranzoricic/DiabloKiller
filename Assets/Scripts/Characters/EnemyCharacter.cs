@@ -10,6 +10,7 @@ public class EnemyCharacter : Character {
         base.Start();
 		navMeshAgent = gameObject.GetComponent<NavMeshAgent> ();
 		player = GameObject.FindGameObjectWithTag ("Player");
+        EnemyManager.Instance().AddEnemy(this);
 	}
 	
 	// Update is called once per frame
