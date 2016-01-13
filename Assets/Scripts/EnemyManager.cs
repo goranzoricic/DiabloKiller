@@ -2,10 +2,9 @@ using UnityEngine;
 using System.Collections;
 
 public class EnemyManager : Updateable {
-    private static EnemyManager instance;
-
-    public static EnemyManager Instance() {
-        return Singleton<EnemyManager>.Instance;
+    public static EnemyManager Instance {
+        get { return Singleton<EnemyManager>.Instance; }
+        private set { }
     }
 
 	// Update is called once per frame
