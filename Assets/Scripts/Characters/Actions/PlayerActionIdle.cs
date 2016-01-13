@@ -7,21 +7,6 @@ public class PlayerActionIdle : PlayerAction {
 
     }
 
-	// Use this for initialization
-	public override void Start () {
-	
-	}
-	
-
-	// Update is called once per frame
-    public virtual ActionResult Update() {
-        return ActionResult.Completed_Fail;
-    }
-
-
-    public override void Stop() {
-    }
-
     public override void ProcessInput() {
     	Ability usedAbility = owner.GetUsedAbility();
     	

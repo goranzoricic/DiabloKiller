@@ -1,34 +1,84 @@
 using System.Collections;
 
+// ----------------------- Public enums -------------------------
 
-public enum ActionResult {
-    Continue,
-    Completed_Success,
-    Completed_Fail
+public enum ActionState {
+    NOT_STARTED,
+    EXECUTING,
+    COMPLETED
 };
 
+public enum ActionTypes {
+    INSTANT,
+    LONG_RUNNING,
+};
 
-// An action is one 'thing' a character can do: move to a point, use an ability, interact with an object.
-// They are managed by an instance of ActionController, which is owned by a character.
-// It will update an action, letting it perform its job, until completion. The action is responsible for
-// performing any special tasks it needs to do upon completion, it should not rely on ActionController to
-// handle that.
+public abstract class Action : IAction {
 
-public class Action {
+    // ----------------------- Class fields -------------------------
+
+    private ActionState state = ActionState.NOT_STARTED;
+    private bool wasSuccess;
+
     protected Character owner;
+    protected ActionTypes type = ActionTypes.INSTANT;
 
-    public Action(Character owningCharacter) {
-        owner = owningCharacter;
+    // ----------------------- Virtual methods -------------------------
+
+    protected abstract bool DoExecute();
+    protected abstract void DoInterrupt();
+    protected abstract void ActionType();
+
+    // ----------------------- Constructors methods -------------------------
+    protected Action(Character owner) {
+        this.owner = owner;
     }
 
-    public virtual void Start() {
+    // ----------------------- Interface methods -------------------------
+
+    public void Execute() {
+        if (state != ActionState.NOT_STARTED) {
+            throw new System.Exception("Wrong state (" + state + "). Only actions in NOT_STARTED state can be executed.");
+        }
+        state = ActionState.EXECUTING;
+        bool success = DoExecute(); 
+        
+        // if action type is INSTANT finish it imediatelly, otherwise wait for future Finish() method call
+        if (type == ActionTypes.INSTANT) {
+            doFinish(success);
+        }
     }
 
-    public virtual ActionResult Update() {
-        return ActionResult.Completed_Fail;
+    public void Interrupt() {
+        if (state != ActionState.EXECUTING) {
+            throw new System.Exception("Wrong state (" + state + "). Only actions in EXECUTING state can be interrupted.");
+        }
+        DoInterrupt();
+        doFinish(false);
     }
 
-    public virtual void Stop() {
-
+    public void Finish(bool success) {
+        if (state != ActionState.EXECUTING ) {
+            throw new System.Exception("Wrong state (" + state + "). Only actions in EXECUTING state can be finished.");
+        }
+        state = ActionState.COMPLETED;
+        doFinish(success);
     }
+
+    public bool WasSuccess() {
+        return wasSuccess;
+    }
+
+    public ActionState State() {
+        return state;
+    }
+
+    // ----------------------- Private methods -------------------------
+
+    public void doFinish(bool success) {
+        state = ActionState.COMPLETED;
+        wasSuccess = success;
+    }
+
+
 }

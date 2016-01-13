@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
 public class PlayerAction : Action {
 
@@ -7,21 +8,19 @@ public class PlayerAction : Action {
 
     }
 
-	// Use this for initialization
-	public override void Start () {
-	
-	}
-
-	// Update is called once per frame
-    public override ActionResult Update() {
-        return ActionResult.Completed_Fail;
-    }
-
-
-    public override void Stop() {
-    }
-
     public virtual void ProcessInput() {
 
+    }
+
+    protected override bool DoExecute() {
+        throw new NotImplementedException();
+    }
+
+    protected override void DoInterrupt() {
+        throw new NotImplementedException();
+    }
+
+    protected override void ActionType() {
+        throw new NotImplementedException();
     }
 }

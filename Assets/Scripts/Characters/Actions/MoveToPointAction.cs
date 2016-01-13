@@ -1,20 +1,23 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
+using System;
 
 public class MoveToPointAction : Action {
 	private Vector3 targetPoint;
 
-    public MoveToPointAction(Character owningCharacter, Vector3 targetPoint) : base(owningCharacter) {
-
+    public MoveToPointAction(Character owner, Vector3 targetPoint) : base(owner) {
+        
     }
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    protected override bool DoExecute() {
+        throw new NotImplementedException();
+    }
+
+    protected override void DoInterrupt() {
+        throw new NotImplementedException();
+    }
+
+    protected override void ActionType() {
+        type = ActionTypes.LONG_RUNNING;
+    }
 }

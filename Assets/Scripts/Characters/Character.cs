@@ -29,7 +29,8 @@ public abstract class Character : MonoBehaviour {
 
     public virtual void OnDeath() {
         abilityController.OnDeath();
-        actionController.OnDeath();
+        // TODO fix this
+        //actionController.OnDeath();
     }
 
     public virtual Ability GetUsedAbility() {
@@ -37,7 +38,8 @@ public abstract class Character : MonoBehaviour {
     }
 
     public virtual void StartAction(Action action) {
-        actionController.StartAction(action);
+        // TODO fix this
+        //actionController.StartAction(action);
     }
 
 	protected float PathLength(NavMeshPath path) {
