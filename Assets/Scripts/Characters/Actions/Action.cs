@@ -13,7 +13,7 @@ public enum ActionTypes {
     LONG_RUNNING,
 };
 
-public abstract class Action : IAction {
+public abstract class Action {
 
     // ----------------------- Class fields -------------------------
 
