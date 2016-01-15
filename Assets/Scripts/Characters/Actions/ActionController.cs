@@ -15,6 +15,7 @@ public class ActionController {
 
     public ActionController(Character owningCharacter) {
         owner = owningCharacter;
+        actionQueue = new Queue<Action>();
     }
 
     // ----------------------- Public methods -------------------------
