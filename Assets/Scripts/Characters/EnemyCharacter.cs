@@ -10,11 +10,12 @@ public class EnemyCharacter : Character {
         base.Start();
 		navMeshAgent = gameObject.GetComponent<NavMeshAgent> ();
 		player = GameObject.FindGameObjectWithTag ("Player");
+        EnemyManager.Instance.AddEnemy(this);
 	}
 	
 	// Update is called once per frame
 	public override void Update () {
-
+        base.Update();
 		if (movementAllowed != true) {
 			return;
 		}
@@ -31,7 +32,8 @@ public class EnemyCharacter : Character {
 	} 
 
 	public override void OnDeath(){
-		movementAllowed = false;
+        base.OnDeath();
+        movementAllowed = false;
 
         // rotate cylinder on death
         Transform t = gameObject.transform;

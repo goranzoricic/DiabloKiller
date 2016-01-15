@@ -8,27 +8,38 @@ public abstract class Character : MonoBehaviour {
 
 	public bool movementAllowed = true;
 
-    private ActionController actionController;
-    private AbilityController abilityController;
-    private BuffController buffController;
+    protected ActionController actionController;
+    protected AbilityController abilityController;
+    protected BuffController buffController;
 
 
     // Use this for initialization
     public virtual void Start () {
+        Debug.LogFormat("[Character.Start] {0}", gameObject.name);
         actionController = new ActionController(this);
         abilityController = new AbilityController(this);
         buffController = new BuffController(this);
     }
 
     public virtual void Update() {
-        actionController.Update();
         abilityController.Update();
+        actionController.Update();
         buffController.Update();
     }
 
     public virtual void OnDeath() {
         abilityController.OnDeath();
-        actionController.OnDeath();
+        // TODO fix this
+        //actionController.OnDeath();
+    }
+
+    public virtual Ability GetUsedAbility() {
+        return null;
+    }
+
+    public virtual void StartAction(Action action) {
+        // TODO fix this
+        //actionController.StartAction(action);
     }
 
 	protected float PathLength(NavMeshPath path) {
