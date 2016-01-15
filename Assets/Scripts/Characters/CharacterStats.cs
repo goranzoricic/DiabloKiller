@@ -3,8 +3,7 @@ using System.Collections;
 
 public class CharacterStats : MonoBehaviour {
 
-    [HideInInspector]
-    public HUDManager HUDManager;
+    public HUDManager hudManager;
 
     // base stats
     private int strength = 10;
@@ -76,8 +75,8 @@ public class CharacterStats : MonoBehaviour {
             currentHealth = 0;
         }
         // Notify HUD
-        if (HUDManager != null) {
-            HUDManager.TakeDamage(currentHealth);
+        if (hudManager != null) {
+            hudManager.TakeDamage(currentHealth);
         }
     }
 
@@ -98,8 +97,8 @@ public class CharacterStats : MonoBehaviour {
             currentHealth = maxHealth;
         }
         // Notify HUD
-        if (HUDManager != null) {
-            HUDManager.PickupHealth(currentHealth);
+        if (hudManager != null) {
+            hudManager.PickupHealth(currentHealth);
         }
     }
 
@@ -118,8 +117,8 @@ public class CharacterStats : MonoBehaviour {
         }
 
         // Notify HUD
-        if (HUDManager != null) {
-            HUDManager.SetMana(currentMana);
+        if (hudManager != null) {
+            hudManager.SetMana(currentMana);
         }
     }
 
@@ -137,8 +136,8 @@ public class CharacterStats : MonoBehaviour {
             currentMana = 0;
         }
         // Notify HUD
-        if (HUDManager != null) {
-            HUDManager.SetMana(currentMana);
+        if (hudManager != null) {
+            hudManager.SetMana(currentMana);
         }
     }
 

@@ -7,6 +7,7 @@ public class EnemyCharacter : Character {
 
     // Use this for initialization
     public override void Start () {
+        base.Start();
 		navMeshAgent = gameObject.GetComponent<NavMeshAgent> ();
 		player = GameObject.FindGameObjectWithTag ("Player");
 	}

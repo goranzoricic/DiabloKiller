@@ -6,9 +6,9 @@ public class PlayerCharacter : Character {
     /**
      *  Variables
      */
-    public HUDManager HUDManager;
+    public HUDManager hudManager;
     public Camera PlayerCamera;
-    [HideInInspector] public CharacterStats characterStats;
+    public CharacterStats characterStats;
 
     private NavMeshPath navPath;
 	private Vector3 destination;
@@ -28,6 +28,7 @@ public class PlayerCharacter : Character {
 
     // Use this for initialization
     public override void Start () {
+        base.Start();
 		navMeshAgent = gameObject.GetComponent<NavMeshAgent> ();
 		navPath = new NavMeshPath();
 		destination = transform.position;
@@ -36,8 +37,7 @@ public class PlayerCharacter : Character {
     }
 
     void Awake() {
-        //characterStats.HUDManager = HUDManager;
-        //HUDManager.Init(characterStats.MaxHealth, characterStats.MaxMana);
+        hudManager.Init(characterStats.MaxHealth, characterStats.MaxMana);
     }
 
     // Moves the character towards the last clicked location. Finds the navigation path to the target, but won't use it if
