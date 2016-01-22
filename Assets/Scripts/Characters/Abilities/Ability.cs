@@ -14,47 +14,49 @@ using System.Collections;
 // - when the callback is invoked (with success/fail), runs a PlayAnimationAction to play the cleave's animation, with a AnimationEvent callback
 // - when the cleave's animation fires the DoDamageNow event, the callback is invoked
 // - the action collects all enemies affected by Cleave, creates a Damage object based on player stats and applies the damage to each enemy
-public class Ability {
-    public string Name;
+namespace DiabloKiller {
+    public class Ability {
+        public string Name;
 
-    private Character owner;
+        private Character owner;
 
-    public Ability(Character owningCharacter, string name) {
-        owner = owningCharacter;
-        Name = name;
-    }
+        public Ability(Character owningCharacter, string name) {
+            owner = owningCharacter;
+            Name = name;
+        }
 
-    public virtual bool CanCastOnPoint(bool ForceStillCast) {
-        return false;
-    }
+        public virtual bool CanCastOnPoint(bool ForceStillCast) {
+            return false;
+        }
 
-    public virtual bool CanCastOnCharacter(Character targetCharacter) {
-        return false;
-    }
+        public virtual bool CanCastOnCharacter(Character targetCharacter) {
+            return false;
+        }
 
-    public virtual bool CanCastOnSelf() {
-        return false;
-    }
+        public virtual bool CanCastOnSelf() {
+            return false;
+        }
 
-    public virtual void SetTarget(Vector3 target) {
+        public virtual void SetTarget(Vector3 target) {
 
-    }
+        }
 
-    public virtual void SetTarget(Character target) {
-        
-    }
+        public virtual void SetTarget(Character target) {
 
-    // Use this for initialization
-    public virtual void Start() {
-	
-	}
+        }
 
-    // Update is called once per frame
-    public virtual void Update () {
-	
-	}
+        // Use this for initialization
+        public virtual void Start() {
 
-    public virtual void Stop() {
+        }
 
+        // Update is called once per frame
+        public virtual void Update() {
+
+        }
+
+        public virtual void Stop() {
+
+        }
     }
 }

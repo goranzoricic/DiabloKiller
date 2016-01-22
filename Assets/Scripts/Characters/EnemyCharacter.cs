@@ -1,52 +1,54 @@
 using UnityEngine;
 using System.Collections;
 
-public class EnemyCharacter : Character {
+namespace DiabloKiller {
+    public class EnemyCharacter : Character {
 
-	GameObject player;
+        GameObject player;
 
-    // Use this for initialization
-    public override void Start () {
-        base.Start();
-		navMeshAgent = gameObject.GetComponent<NavMeshAgent> ();
-		player = GameObject.FindGameObjectWithTag ("Player");
-        EnemyManager.Instance.AddEnemy(this);
-	}
-	
-	// Update is called once per frame
-	public override void Update () {
-        base.Update();
-		if (movementAllowed != true) {
-			return;
-		}
+        // Use this for initialization
+        public override void Start() {
+            base.Start();
+            navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
+            player = GameObject.FindGameObjectWithTag("Player");
+            EnemyManager.Instance.AddEnemy(this);
+        }
 
-		if (navMeshAgent == null) {
-			return;
-		}
+        // Update is called once per frame
+        public override void Update() {
+            base.Update();
+            if (movementAllowed != true) {
+                return;
+            }
 
-		if (player) {
-			navMeshAgent.destination = player.transform.position;
-			navMeshAgent.Resume();
-		}
+            if (navMeshAgent == null) {
+                return;
+            }
 
-	} 
+            if (player) {
+                navMeshAgent.destination = player.transform.position;
+                navMeshAgent.Resume();
+            }
 
-	public override void OnDeath(){
-        base.OnDeath();
-        movementAllowed = false;
+        }
 
-        // rotate cylinder on death
-        Transform t = gameObject.transform;
-        t.Rotate (90f, 0f, 0f);
-		Renderer renderer = gameObject.GetComponent<Renderer> ();
-		renderer.material.color = Color.red;
+        public override void OnDeath() {
+            base.OnDeath();
+            movementAllowed = false;
 
-		// spawn health pickup when enemy dies
-		Vector3 newPosition = t.position;
-		GameObject newObject = SpawnLoot.Spawn ();
-		newObject.transform.position = newPosition;
+            // rotate cylinder on death
+            Transform t = gameObject.transform;
+            t.Rotate(90f, 0f, 0f);
+            Renderer renderer = gameObject.GetComponent<Renderer>();
+            renderer.material.color = Color.red;
 
-		Destroy (t.gameObject);
-	}
+            // spawn health pickup when enemy dies
+            Vector3 newPosition = t.position;
+            GameObject newObject = SpawnLoot.Spawn();
+            newObject.transform.position = newPosition;
 
+            Destroy(t.gameObject);
+        }
+
+    }
 }

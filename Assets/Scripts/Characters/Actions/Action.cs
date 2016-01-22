@@ -2,83 +2,87 @@ using System.Collections;
 
 // ----------------------- Public enums -------------------------
 
-public enum ActionState {
-    NOT_STARTED,
-    EXECUTING,
-    COMPLETED
-};
+namespace DiabloKiller {
 
-public enum ActionTypes {
-    INSTANT,
-    LONG_RUNNING,
-};
+    public enum ActionState {
+        NOT_STARTED,
+        EXECUTING,
+        COMPLETED
+    };
 
-public abstract class Action {
+    public enum ActionTypes {
+        INSTANT,
+        LONG_RUNNING,
+    };
 
-    // ----------------------- Class fields -------------------------
+    public abstract class Action {
 
-    private ActionState state = ActionState.NOT_STARTED;
-    private bool wasSuccess;
+        // ----------------------- Class fields -------------------------
 
-    protected Character owner;
-    protected ActionTypes type = ActionTypes.INSTANT;
+        private ActionState state = ActionState.NOT_STARTED;
+        private bool wasSuccess;
 
-    // ----------------------- Virtual methods -------------------------
+        protected Character owner;
+        protected ActionTypes type = ActionTypes.INSTANT;
 
-    protected abstract bool DoExecute();
-    protected abstract void DoInterrupt();
-    protected abstract void ActionType();
+        // ----------------------- Virtual methods -------------------------
 
-    // ----------------------- Constructors methods -------------------------
-    protected Action(Character owner) {
-        this.owner = owner;
-    }
+        protected abstract bool DoExecute();
+        protected abstract void DoInterrupt();
+        protected abstract void ActionType();
 
-    // ----------------------- Interface methods -------------------------
-
-    public void Execute() {
-        if (state != ActionState.NOT_STARTED) {
-            throw new System.Exception("Wrong state (" + state + "). Only actions in NOT_STARTED state can be executed.");
+        // ----------------------- Constructors methods -------------------------
+        protected Action(Character owner) {
+            this.owner = owner;
         }
-        state = ActionState.EXECUTING;
-        bool success = DoExecute(); 
-        
-        // if action type is INSTANT finish it imediatelly, otherwise wait for future Finish() method call
-        if (type == ActionTypes.INSTANT) {
+
+        // ----------------------- Interface methods -------------------------
+
+        public void Execute() {
+            if (state != ActionState.NOT_STARTED) {
+                throw new System.Exception("Wrong state (" + state + "). Only actions in NOT_STARTED state can be executed.");
+            }
+            state = ActionState.EXECUTING;
+            bool success = DoExecute();
+
+            // if action type is INSTANT finish it imediatelly, otherwise wait for future Finish() method call
+            if (type == ActionTypes.INSTANT) {
+                doFinish(success);
+            }
+        }
+
+        public void Interrupt() {
+            if (state != ActionState.EXECUTING) {
+                throw new System.Exception("Wrong state (" + state + "). Only actions in EXECUTING state can be interrupted.");
+            }
+            DoInterrupt();
+            doFinish(false);
+        }
+
+        public void Finish(bool success) {
+            if (state != ActionState.EXECUTING) {
+                throw new System.Exception("Wrong state (" + state + "). Only actions in EXECUTING state can be finished.");
+            }
+            state = ActionState.COMPLETED;
             doFinish(success);
         }
-    }
 
-    public void Interrupt() {
-        if (state != ActionState.EXECUTING) {
-            throw new System.Exception("Wrong state (" + state + "). Only actions in EXECUTING state can be interrupted.");
+        public bool WasSuccess() {
+            return wasSuccess;
         }
-        DoInterrupt();
-        doFinish(false);
-    }
 
-    public void Finish(bool success) {
-        if (state != ActionState.EXECUTING ) {
-            throw new System.Exception("Wrong state (" + state + "). Only actions in EXECUTING state can be finished.");
+        public ActionState State() {
+            return state;
         }
-        state = ActionState.COMPLETED;
-        doFinish(success);
+
+        // ----------------------- Private methods -------------------------
+
+        public void doFinish(bool success) {
+            state = ActionState.COMPLETED;
+            wasSuccess = success;
+        }
+
+
     }
-
-    public bool WasSuccess() {
-        return wasSuccess;
-    }
-
-    public ActionState State() {
-        return state;
-    }
-
-    // ----------------------- Private methods -------------------------
-
-    public void doFinish(bool success) {
-        state = ActionState.COMPLETED;
-        wasSuccess = success;
-    }
-
 
 }

@@ -2,28 +2,30 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class BuffController {
-    private List<Buff> appliedBuffs;
-    private Character owner;
+namespace DiabloKiller {
+    public class BuffController {
+        private List<Buff> appliedBuffs;
+        private Character owner;
 
-    public BuffController(Character owningCharacter) {
-        owner = owningCharacter;
-        appliedBuffs = new List<Buff>();
-    }
-
-    // Update is called once per frame
-    public void Update() {
-        foreach (Buff buff in appliedBuffs) {
-                buff.Update();
+        public BuffController(Character owningCharacter) {
+            owner = owningCharacter;
+            appliedBuffs = new List<Buff>();
         }
 
-        appliedBuffs.RemoveAll(buff => buff.HasExpired());
-    }
+        // Update is called once per frame
+        public void Update() {
+            foreach (Buff buff in appliedBuffs) {
+                buff.Update();
+            }
 
-    public void UseBuff(Buff buff) {
-    }
+            appliedBuffs.RemoveAll(buff => buff.HasExpired());
+        }
 
-    public void OnDeath() {
-    }
+        public void UseBuff(Buff buff) {
+        }
 
-};
+        public void OnDeath() {
+        }
+
+    };
+}

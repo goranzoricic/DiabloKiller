@@ -5,7 +5,6 @@ using System.Collections.Generic;
 
 namespace DiabloKiller {
 
-
     public abstract class EventData {
     }
 
