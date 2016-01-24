@@ -9,9 +9,6 @@ namespace DiabloKiller {
          */  
         public Camera PlayerCamera;
 
-        private CharacterStats characterStats;
-        private CharacterResources characterResources;
-
         private NavMeshPath navPath;
         private Vector3 destination;
         private Rigidbody body;
@@ -23,6 +20,9 @@ namespace DiabloKiller {
         private float LastContactTime = 0.0f;
         private bool stoppedDueToCollision = false;
 
+        protected CharacterStats characterStats;
+
+
         // ----------------------- Unity Overriden Methods -------------------------
         // Use this for initialization
         public override void Start() {
@@ -32,10 +32,7 @@ namespace DiabloKiller {
             navPath = new NavMeshPath();
             destination = transform.position;
             body = gameObject.GetComponent<Rigidbody>();
-            characterStats = gameObject.GetComponent<CharacterStats>();
-            characterStats.SetOwner(this);
-            characterResources = gameObject.GetComponent<CharacterResources>();
-            characterResources.SetOwner(this);
+
 
             MeleeAbility cleave = new MeleeAbility(this, "Cleave");
             abilityController.AddAbility("Primary", cleave);
@@ -45,12 +42,18 @@ namespace DiabloKiller {
             abilityController.AddAbility("Ability01", avalanche);
             SelfCastAbility battleShout = new SelfCastAbility(this, "Battle Shout");
             abilityController.AddAbility("Ability02", battleShout);
+
+            characterStats = gameObject.GetComponent<CharacterStats>();
+            characterStats.SetOwner(this);
+
+            //init HUD
+            HUDView hudView = GetHudView();
+            hudView.Init(characterResources.maxHealth, characterResources.maxMana, characterResources.currentHealth , characterResources.currentMana);
+
         }
 
 
         void Awake() {
-            //characterStats.HUDInLevel = HUDInLevel;
-            //HUDInLevel.Init(characterStats.MaxHealth, characterStats.MaxMana);
         }
 
 

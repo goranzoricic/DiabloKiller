@@ -9,6 +9,7 @@ namespace DiabloKiller {
             if (SpawnMaster != null) {
                 SpawnMaster.ObjectDestroyed(transform);
             }
+            Debug.LogFormat("[Pickup.OnTriggerEnter] Destroying {0}", gameObject);
             Destroy(gameObject);
         }
 

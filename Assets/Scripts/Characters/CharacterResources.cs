@@ -4,17 +4,23 @@ using System.Collections;
 namespace DiabloKiller {
     public class CharacterResources : MonoBehaviour {
 
-        public long maxHealth =200;
+        public long maxHealth = 200;
         public long maxMana = 200;
 
-        private long currentHealth;
-        private long currentMana;
+        public long currentHealth  { get; set; }
+        public long currentMana    { get; set; }
+
         private Character owner;
 
-        void Awake() {
+        // ----------------------- Public Methods -------------------------
+        public void Awake() {
         }
 
-        // ----------------------- Public Methods -------------------------
+        public void Init() {
+            currentHealth = maxHealth / 2;
+            currentMana = maxMana / 2;
+        }
+
         public void SetOwner(Character owner) {
             this.owner = owner;
         }
@@ -26,16 +32,16 @@ namespace DiabloKiller {
                 return;
             }
             // check if player can take damage
-            if (!CanReceiveHealth()) {
+            if (!CanReceiveDamage()) {
                 return;
             }
 
             // decrease health
-            Debug.LogFormat("[CharacterStats.ReceiveDamage] Damaging player for: " + damageToReceive);
             currentHealth = currentHealth - damageToReceive;
             if (currentHealth <= 0) {
                 currentHealth = 0;
             }
+            Debug.LogFormat("[CharacterResources.ReceiveDamage] Damaging {0} for {1}, currentHealth {2}", owner, damageToReceive, currentHealth);
             // Notify HUD
             HUDView hudView = owner.GetHudView();
             if (hudView != null) {
@@ -54,11 +60,11 @@ namespace DiabloKiller {
             }
 
             // increse health
-            Debug.LogFormat("[CharacterStats.ReceiveHealth] Healing player for: " + healthToReceive);
             currentHealth += healthToReceive;
             if (currentHealth > maxHealth) {
                 currentHealth = maxHealth;
             }
+            Debug.LogFormat("[CharacterResources.ReceiveHealth] Healing character for {0}, currentHealth {1}", healthToReceive, currentHealth);
             // Notify HUD
             HUDView hudView = owner.GetHudView();
             if (hudView != null) {
@@ -72,7 +78,7 @@ namespace DiabloKiller {
                 return;
             }
 
-            Debug.LogFormat("[CharacterStats.ReceiveMana] Get mana: " + manaToReceive);
+            Debug.LogFormat("[CharacterResources.ReceiveMana] Get mana: " + manaToReceive);
             currentMana += manaToReceive;
 
             // if mana is oever maxMana, reduce it to maxMana
@@ -93,7 +99,7 @@ namespace DiabloKiller {
                 return;
             }
 
-            Debug.LogFormat("[CharacterStats.ReceiveMana] Spend mana: " + manaToSpend);
+            Debug.LogFormat("[CharacterResources.SpendMana] Spend mana: " + manaToSpend);
             currentMana -= manaToSpend;
 
             // if mana < 0, set it to 0

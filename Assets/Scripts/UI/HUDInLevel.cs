@@ -45,9 +45,12 @@ namespace DiabloKiller {
             damaged = false;
         }
 
-        public void Init(long maxHelath, int maxMana) {
+        public void Init(long maxHelath, long maxMana, long currentHealth, long currentMana) {
+            Debug.LogFormat("[HUDInLevel.Init] Initalizing HUD, maxHealh: {0}, maxMana: {1}, health: {2}, mana: {3} ",maxHelath, maxMana, currentHealth, currentMana);
             healthSlider.maxValue = maxHelath;
             manaSlider.maxValue = maxMana;
+            healthSlider.value = currentHealth;
+            manaSlider.value = currentMana;
         }
 
 

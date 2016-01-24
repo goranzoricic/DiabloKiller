@@ -11,6 +11,7 @@ namespace DiabloKiller {
         void ReceiveHealth(long healthRecieved, long currentHealth);
         void AddMana(long manaAdded, long currentMana);
         void SpendMana(long manaSpent, long currentMana);
+        void Init(long maxHealth, long maxMana, long currentHealth, long currentMana);
 
     }
 }

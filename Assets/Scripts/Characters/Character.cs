@@ -14,12 +14,18 @@ namespace DiabloKiller {
         protected AbilityController abilityController;
         protected BuffController buffController;
 
+        protected CharacterResources characterResources;
+
         // Use this for initialization
         public virtual void Start() {
             Debug.LogFormat("[Character.Start] {0}", gameObject.name);
             actionController = new ActionController(this);
             abilityController = new AbilityController(this);
             buffController = new BuffController(this);
+
+            characterResources = gameObject.GetComponent<CharacterResources>();
+            characterResources.SetOwner(this);
+            characterResources.Init();
         }
 
         public virtual void Update() {
@@ -44,7 +50,13 @@ namespace DiabloKiller {
         }
 
         public HUDView GetHudView() {
-            return (HUDView) hudView.GetComponent<HUDView>();
+            HUDView result = null;
+            try {
+                result = (HUDView)hudView.GetComponent<HUDView>();
+            } catch (UnassignedReferenceException e) {
+                // do nothing
+            }
+            return result;
         }
 
         protected float PathLength(NavMeshPath path) {
