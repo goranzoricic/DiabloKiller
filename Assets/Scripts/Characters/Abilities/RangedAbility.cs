@@ -2,9 +2,9 @@ using UnityEngine;
 using System.Collections;
 
 namespace DiabloKiller {
-    public class RangedAbility : Ability {
+    public abstract class RangedAbility : Ability {
         Vector3 targetPoint;
-
+        
         public RangedAbility(Character owningCharacter, string name) : base(owningCharacter, name) {
         }
 
@@ -29,6 +29,7 @@ namespace DiabloKiller {
 
         // Use this for initialization
         public override void Start() {
+            Debug.Log("[RangedAbility.Start]");
 
         }
 

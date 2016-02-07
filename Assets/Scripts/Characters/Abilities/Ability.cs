@@ -15,13 +15,13 @@ using System.Collections;
 // - when the cleave's animation fires the DoDamageNow event, the callback is invoked
 // - the action collects all enemies affected by Cleave, creates a Damage object based on player stats and applies the damage to each enemy
 namespace DiabloKiller {
-    public class Ability {
+    public abstract class Ability {
         public string Name;
 
-       // private Character owner;
+        protected Character owner;
 
         public Ability(Character owningCharacter, string name) {
-        //    owner = owningCharacter;
+            owner = owningCharacter;
             Name = name;
         }
 

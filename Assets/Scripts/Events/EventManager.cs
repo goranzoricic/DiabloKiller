@@ -8,6 +8,13 @@ namespace DiabloKiller {
     public abstract class EventData {
     }
 
+    public class EventDataBoolean : EventData {
+        public bool Value { get; set; }
+        public EventDataBoolean(bool value) {
+            Value = value;
+        }
+    }
+
     public class EventManager : Updateable {
         public static EventManager Instance {
             get { return Singleton<EventManager>.Instance; }
@@ -59,6 +66,7 @@ namespace DiabloKiller {
 
         public void AddEventListener(string eventName, Action<EventData> callback) {
             Event registeredEvent;
+            Debug.LogFormat("[EventManager.AddEventListener] Adding an event listener for event: {0}", eventName);
             if (events.TryGetValue(eventName, out registeredEvent)) {
                 registeredEvent.AddListener(callback);
             } else {
@@ -69,6 +77,7 @@ namespace DiabloKiller {
 
         public void RemoveEventListener(string eventName, Action<EventData> callback) {
             Event registeredEvent;
+            Debug.LogFormat("[EventManager.RemoveEventListener] Removing an event listener for event: {0}", eventName);
             if (events.TryGetValue(eventName, out registeredEvent)) {
                 registeredEvent.RemoveListener(callback);
                 if (registeredEvent.NumListeners == 0) {
@@ -82,6 +91,7 @@ namespace DiabloKiller {
 
         public void TriggerEvent(string eventName, EventData eventdata) {
             Event registeredEvent;
+            Debug.LogFormat("[EventManager.TriggerEvent] Event triggered: {0}", eventName);
             if (events.TryGetValue(eventName, out registeredEvent)) {
                 registeredEvent.Trigger(eventdata);
             }

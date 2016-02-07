@@ -34,14 +34,16 @@ namespace DiabloKiller {
                             // for now I'm inclined to think that actions should not have updates, but we'll see
                             break;
                         }
-                    case ActionState.Completed:
+                    case ActionState.CompletedSuccess:
+                    case ActionState.CompletedFail:
                         {
+                            Debug.Log("[ActionController.Update] action completed: " + currentAction.GetType());
                             ExecuteNextAction();
                             break;
                         }
                     default:
                         {
-                            Debug.LogError("[ActivityController.Update] Invalid action result in action controller");
+                            Debug.LogError("[ActionController.Update] Invalid action result in action controller");
                             break;
                         }
                 }

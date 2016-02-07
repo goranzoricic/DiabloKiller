@@ -4,10 +4,14 @@ using System.Collections;
 namespace DiabloKiller {
     public abstract class Character : MonoBehaviour {
 
-        [HideInInspector]
         public NavMeshAgent navMeshAgent;
+        [HideInInspector]
+        public CharacterMovement characterMovement;
 
-        public bool movementAllowed = true;
+        public bool MovementAllowed {
+            get { return characterMovement.MovementAllowed; }
+            set { characterMovement.MovementAllowed = value; }
+        }
 
         protected ActionController actionController;
         protected AbilityController abilityController;
@@ -25,6 +29,10 @@ namespace DiabloKiller {
             characterResources = gameObject.GetComponent<CharacterResources>();
             characterResources.SetOwner(this);
             characterResources.Init();
+
+            characterMovement = new CharacterMovement();
+            characterMovement.SetOwner(this);
+            characterMovement.Init();
         }
 
         public virtual void Update() {
@@ -39,29 +47,9 @@ namespace DiabloKiller {
             //actionController.OnDeath();
         }
 
-        public virtual Ability GetUsedAbility() {
-            return null;
-        }
-
         public virtual void StartAction(Action action) {
             // TODO fix this
             //actionController.StartAction(action);
-        }
-
-        protected float PathLength(NavMeshPath path) {
-            if (path.corners.Length < 2)
-                return 0;
-
-            Vector3 previousCorner = path.corners[0];
-            float lengthSoFar = 0.0F;
-            int i = 1;
-            while (i < path.corners.Length) {
-                Vector3 currentCorner = path.corners[i];
-                lengthSoFar += Vector3.Distance(previousCorner, currentCorner);
-                previousCorner = currentCorner;
-                i++;
-            }
-            return lengthSoFar;
         }
     }
 }

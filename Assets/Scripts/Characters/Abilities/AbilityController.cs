@@ -39,17 +39,17 @@ namespace DiabloKiller {
             // at the same time, first one found by the ifs will be selected for use
             // this means that if the user moves by holding the left mouse button and then uses some other ability, 
             // the new ability will be executed 
-            if (Input.GetButton("Ability04")) {
+            if (Input.GetButtonDown("Ability04")) {
                 abilityFromInput = abilities["Ability04"];
-            } else if (Input.GetButton("Ability03")) {
+            } else if (Input.GetButtonDown("Ability03")) {
                 abilityFromInput = abilities["Ability03"];
-            } else if (Input.GetButton("Ability02")) {
+            } else if (Input.GetButtonDown("Ability02")) {
                 abilityFromInput = abilities["Ability02"];
-            } else if (Input.GetButton("Ability01")) {
+            } else if (Input.GetButtonDown("Ability01")) {
                 abilityFromInput = abilities["Ability01"];
-            } else if (Input.GetButton("Secondary")) {
+            } else if (Input.GetButtonDown("Secondary")) {
                 abilityFromInput = abilities["Secondary"];
-            } else if (Input.GetButton("Primary")) {
+            } else if (Input.GetButtonDown("Primary")) {
                 abilityFromInput = abilities["Primary"];
             }
 

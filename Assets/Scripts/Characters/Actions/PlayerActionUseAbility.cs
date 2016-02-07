@@ -13,5 +13,17 @@ namespace DiabloKiller {
 
         public override void ProcessInput() {
         }
+
+
+        // ----------------------- Virtual methods -------------------------
+
+        protected override ActionState DoExecute() {
+            ability.Start();
+            return ActionState.CompletedSuccess;
+        }
+
+        protected override ActionState DoInterrupt() {
+            return ActionState.CompletedSuccess;
+        }
     }
 }

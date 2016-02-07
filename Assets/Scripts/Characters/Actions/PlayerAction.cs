@@ -3,7 +3,7 @@ using System.Collections;
 using System;
 
 namespace DiabloKiller {
-    public class PlayerAction : Action {
+    public abstract class PlayerAction : Action {
 
         public PlayerAction(Character owningCharacter) : base(owningCharacter) {
 
@@ -13,15 +13,11 @@ namespace DiabloKiller {
 
         }
 
-        protected override bool DoExecute() {
+        protected override ActionState DoExecute() {
             throw new NotImplementedException();
         }
 
-        protected override void DoInterrupt() {
-            throw new NotImplementedException();
-        }
-
-        protected override void ActionType() {
+        protected override ActionState DoInterrupt() {
             throw new NotImplementedException();
         }
     }

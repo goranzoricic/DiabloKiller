@@ -17,7 +17,7 @@ namespace DiabloKiller {
         // Update is called once per frame
         public override void Update() {
             base.Update();
-            if (movementAllowed != true) {
+            if (MovementAllowed != true) {
                 return;
             }
 
@@ -34,7 +34,7 @@ namespace DiabloKiller {
 
         public override void OnDeath() {
             base.OnDeath();
-            movementAllowed = false;
+            MovementAllowed = false;
 
             // rotate cylinder on death
             Transform t = gameObject.transform;

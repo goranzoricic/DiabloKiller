@@ -7,19 +7,25 @@ namespace DiabloKiller {
         private Vector3 targetPoint;
 
         public MoveToPointAction(Character owner, Vector3 targetPoint) : base(owner) {
-
+            this.targetPoint = targetPoint;
         }
 
-        protected override bool DoExecute() {
+        protected override ActionState DoExecute() {
+            EventManager.Instance.AddEventListener("CharacterStopped", OnCharacterStopped);
+            owner.characterMovement.SetDestination(targetPoint);
+            return ActionState.Running;
+        }
+
+        protected override ActionState DoInterrupt() {
             throw new NotImplementedException();
         }
 
-        protected override void DoInterrupt() {
-            throw new NotImplementedException();
-        }
-
-        protected override void ActionType() {
-            type = ActionTypes.LongRunning;
+        public void OnCharacterStopped(EventData eventData) {
+            if (((EventDataBoolean)eventData).Value) {
+                state = ActionState.CompletedSuccess;
+            } else {
+                state = ActionState.CompletedFail;
+            }
         }
     }
 }
