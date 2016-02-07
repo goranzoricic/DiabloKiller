@@ -18,10 +18,10 @@ namespace DiabloKiller {
     public class Ability {
         public string Name;
 
-        private Character owner;
+       // private Character owner;
 
         public Ability(Character owningCharacter, string name) {
-            owner = owningCharacter;
+        //    owner = owningCharacter;
             Name = name;
         }
 

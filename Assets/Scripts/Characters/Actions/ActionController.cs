@@ -25,16 +25,16 @@ namespace DiabloKiller {
         public void Update() {
             if (currentAction != null) {
                 switch (currentAction.State()) {
-                    case ActionState.NOT_STARTED:
+                    case ActionState.Queued:
                         currentAction.Execute();
                         break;
-                    case ActionState.EXECUTING:
+                    case ActionState.Running:
                         {
                             // TODO Dino: think do we need to drive action update from here, 
                             // for now I'm inclined to think that actions should not have updates, but we'll see
                             break;
                         }
-                    case ActionState.COMPLETED:
+                    case ActionState.Completed:
                         {
                             ExecuteNextAction();
                             break;

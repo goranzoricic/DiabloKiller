@@ -5,25 +5,25 @@ using System.Collections;
 namespace DiabloKiller {
 
     public enum ActionState {
-        NOT_STARTED,
-        EXECUTING,
-        COMPLETED
+        Queued,
+        Running,
+        Completed
     };
 
     public enum ActionTypes {
-        INSTANT,
-        LONG_RUNNING,
+        Instant,
+        LongRunning,
     };
 
     public abstract class Action {
 
         // ----------------------- Class fields -------------------------
 
-        private ActionState state = ActionState.NOT_STARTED;
+        private ActionState state = ActionState.Queued;
         private bool wasSuccess;
 
         protected Character owner;
-        protected ActionTypes type = ActionTypes.INSTANT;
+        protected ActionTypes type = ActionTypes.Instant;
 
         // ----------------------- Virtual methods -------------------------
 
@@ -39,31 +39,31 @@ namespace DiabloKiller {
         // ----------------------- Interface methods -------------------------
 
         public void Execute() {
-            if (state != ActionState.NOT_STARTED) {
-                throw new System.Exception("Wrong state (" + state + "). Only actions in NOT_STARTED state can be executed.");
+            if (state != ActionState.Queued) {
+                throw new System.Exception("Wrong state (" + state + "). Only actions in Queued state can be executed.");
             }
-            state = ActionState.EXECUTING;
+            state = ActionState.Running;
             bool success = DoExecute();
 
-            // if action type is INSTANT finish it imediatelly, otherwise wait for future Finish() method call
-            if (type == ActionTypes.INSTANT) {
+            // if action type is Instant finish it imediatelly, otherwise wait for future Finish() method call
+            if (type == ActionTypes.Instant) {
                 doFinish(success);
             }
         }
 
         public void Interrupt() {
-            if (state != ActionState.EXECUTING) {
-                throw new System.Exception("Wrong state (" + state + "). Only actions in EXECUTING state can be interrupted.");
+            if (state != ActionState.Running) {
+                throw new System.Exception("Wrong state (" + state + "). Only actions in Running state can be interrupted.");
             }
             DoInterrupt();
             doFinish(false);
         }
 
         public void Finish(bool success) {
-            if (state != ActionState.EXECUTING) {
-                throw new System.Exception("Wrong state (" + state + "). Only actions in EXECUTING state can be finished.");
+            if (state != ActionState.Running) {
+                throw new System.Exception("Wrong state (" + state + "). Only actions in Running state can be finished.");
             }
-            state = ActionState.COMPLETED;
+            state = ActionState.Completed;
             doFinish(success);
         }
 
@@ -78,7 +78,7 @@ namespace DiabloKiller {
         // ----------------------- Private methods -------------------------
 
         public void doFinish(bool success) {
-            state = ActionState.COMPLETED;
+            state = ActionState.Completed;
             wasSuccess = success;
         }
 

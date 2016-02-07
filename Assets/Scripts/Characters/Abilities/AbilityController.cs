@@ -4,10 +4,10 @@ using System.Collections.Generic;
 namespace DiabloKiller {
     public class AbilityController {
         private Dictionary<string, Ability> abilities;
-        private Character owner;
+ //       private Character owner;
 
         public AbilityController(Character owningCharacter) {
-            owner = owningCharacter;
+   //         owner = owningCharacter;
             abilities = new Dictionary<string, Ability>();
         }
 

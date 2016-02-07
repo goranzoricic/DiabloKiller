@@ -19,7 +19,7 @@ namespace DiabloKiller {
         }
 
         protected override void ActionType() {
-            type = ActionTypes.LONG_RUNNING;
+            type = ActionTypes.LongRunning;
         }
     }
 }
