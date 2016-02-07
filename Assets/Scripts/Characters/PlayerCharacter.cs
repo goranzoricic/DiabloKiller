@@ -8,7 +8,6 @@ namespace DiabloKiller {
          *  Variables
          */  
         public Camera PlayerCamera;
-        private HUDView hudView;
 
         private NavMeshPath navPath;
         private Vector3 destination;
