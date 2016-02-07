@@ -8,7 +8,6 @@ namespace DiabloKiller {
         public NavMeshAgent navMeshAgent;
 
         public bool movementAllowed = true;
-        public Component hudView;
 
         protected ActionController actionController;
         protected AbilityController abilityController;
@@ -47,16 +46,6 @@ namespace DiabloKiller {
         public virtual void StartAction(Action action) {
             // TODO fix this
             //actionController.StartAction(action);
-        }
-
-        public HUDView GetHudView() {
-            HUDView result = null;
-            try {
-                result = (HUDView)hudView.GetComponent<HUDView>();
-            } catch (UnassignedReferenceException e) {
-                // do nothing
-            }
-            return result;
         }
 
         protected float PathLength(NavMeshPath path) {

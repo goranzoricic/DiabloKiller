@@ -42,11 +42,6 @@ namespace DiabloKiller {
                 currentHealth = 0;
             }
             Debug.LogFormat("[CharacterResources.ReceiveDamage] Damaging {0} for {1}, currentHealth {2}", owner, damageToReceive, currentHealth);
-            // Notify HUD
-            HUDView hudView = owner.GetHudView();
-            if (hudView != null) {
-                hudView.TakeDamage(damageToReceive, currentHealth);
-            }
         }
 
         public void ReceiveHealth(long healthToReceive) {
@@ -65,11 +60,6 @@ namespace DiabloKiller {
                 currentHealth = maxHealth;
             }
             Debug.LogFormat("[CharacterResources.ReceiveHealth] Healing character for {0}, currentHealth {1}", healthToReceive, currentHealth);
-            // Notify HUD
-            HUDView hudView = owner.GetHudView();
-            if (hudView != null) {
-                hudView.ReceiveHealth(healthToReceive, currentHealth);
-            }
         }
 
         public void ReceiveMana(int manaToReceive) {
@@ -84,12 +74,6 @@ namespace DiabloKiller {
             // if mana is oever maxMana, reduce it to maxMana
             if (currentMana > maxMana) {
                 currentMana = maxMana;
-            }
-
-            // Notify HUD
-            HUDView hudView = owner.GetHudView();
-            if (hudView != null) {
-                hudView.AddMana(manaToReceive, currentMana);
             }
         }
 
@@ -106,18 +90,12 @@ namespace DiabloKiller {
             if (currentMana < 0) {
                 currentMana = 0;
             }
-            // Notify HUD
-            HUDView hudView = owner.GetHudView();
-            if (hudView != null) {
-                hudView.SpendMana(manaToSpend, currentMana);
-            }
         }
 
         // ----------------------- Private methods -------------------------
         private bool CanReceiveHealth() {
             // check if dead
             bool result = currentHealth != 0;
-
 
             return result;
         }

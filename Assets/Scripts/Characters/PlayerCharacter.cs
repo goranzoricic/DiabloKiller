@@ -8,6 +8,7 @@ namespace DiabloKiller {
          *  Variables
          */  
         public Camera PlayerCamera;
+        private HUDView hudView;
 
         private NavMeshPath navPath;
         private Vector3 destination;
@@ -46,16 +47,12 @@ namespace DiabloKiller {
             characterStats = gameObject.GetComponent<CharacterStats>();
             characterStats.SetOwner(this);
 
-            //init HUD
-            HUDView hudView = GetHudView();
-            hudView.Init(characterResources.maxHealth, characterResources.maxMana, characterResources.currentHealth , characterResources.currentMana);
-
+            HUDInLevel.Instance.Init(characterResources);
         }
 
 
         void Awake() {
         }
-
 
         // Moves the character towards the last clicked location. Finds the navigation path to the target, but won't use it if
         // it is much longer than the linear distance to the destination. This is a copy of Diablo 3 movement, and the reasoning
@@ -156,7 +153,7 @@ namespace DiabloKiller {
             return characterResources;
         }
 
-        public virtual Ability GetUsedAbility() {
+        public override Ability GetUsedAbility() {
             return abilityController.GetAbilityFromInput();
         }
 
