@@ -87,14 +87,14 @@ namespace DiabloKiller {
                 RaycastHit hit;
                 bool hitSomething = Physics.Raycast(ray, out hit, 100) && !hit.collider.CompareTag("Player");
                 if (hitSomething) {
-                    if (hit.collider.CompareTag("Floor") && usedAbility.CanCastOnPoint(forceStillCast)) {
+                    if ((hit.collider.CompareTag("Floor") || hit.collider.CompareTag("Wall")) && usedAbility.CanCastOnPoint(forceStillCast)) {
                         usedAbility.SetTarget(hit.point);
                         newAction = new PlayerActionUseAbility(this, usedAbility, forceStillCast);
-                    } else if (hit.collider.CompareTag("Enemy") && usedAbility.CanCastOnCharacter(hit.collider.gameObject.GetComponent<Character>())) {
+                    } else if (hit.collider.CompareTag("Enemy") && usedAbility.CanCastOnCharacter(hit.collider.gameObject.GetComponent<Character>(), forceStillCast)) {
                         Character target = hit.collider.gameObject.GetComponent<Character>();
                         usedAbility.SetTarget(target);
                         newAction = new PlayerActionUseAbility(this, usedAbility, forceStillCast);
-                    } else {
+                    } else if (!forceStillCast) {
                         newAction = new MoveToPointAction(this, hit.point);
                     }
                 }
