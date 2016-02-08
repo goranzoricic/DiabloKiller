@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace DiabloKiller {
     public abstract class RangedAbility : Ability {
-        Vector3 targetPoint;
+        protected Vector3 targetPoint;
         
         public RangedAbility(Character owningCharacter, string name) : base(owningCharacter, name) {
         }

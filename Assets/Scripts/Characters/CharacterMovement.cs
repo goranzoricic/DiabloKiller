@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 namespace DiabloKiller {
@@ -119,7 +119,7 @@ namespace DiabloKiller {
             }
         }
 
-        private void Stop(bool reachedDestination, bool dueToCollision) {
+        public void Stop(bool reachedDestination, bool dueToCollision) {
             body.velocity = Vector3.zero;
             destination = owner.transform.position;
             stoppedDueToCollision = dueToCollision;
