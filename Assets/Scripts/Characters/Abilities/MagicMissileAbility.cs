@@ -19,7 +19,9 @@ namespace DiabloKiller {
         public override void Start() {
             Debug.Log("[MagicMissileAbility.Start]");
 
-            Vector3 direction = (targetPoint - owner.transform.position).normalized;
+            Vector3 direction = targetPoint - owner.transform.position;
+            direction.y = 0;
+            direction.Normalize();
             Quaternion rotation = Quaternion.LookRotation(direction);
             owner.transform.rotation = rotation;
             Vector3 position = owner.transform.position + direction + new Vector3(0.0f,1.5f,0.0f);
