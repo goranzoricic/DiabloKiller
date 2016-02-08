@@ -17,7 +17,8 @@ namespace DiabloKiller {
         }
 
         protected override ActionState DoInterrupt() {
-            throw new NotImplementedException();
+            state = ActionState.CompletedSuccess;
+            return state;
         }
 
         public void OnCharacterStopped(EventData eventData) {

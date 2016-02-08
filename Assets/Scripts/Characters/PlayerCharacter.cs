@@ -101,7 +101,7 @@ namespace DiabloKiller {
             }
 
             if (newAction != null) {
-                actionController.QueueAction(newAction);
+                actionController.ExecuteAction(newAction);
             }
         }
 

@@ -60,6 +60,15 @@ namespace DiabloKiller {
             actionQueue.Enqueue(newAction);
         }
 
+        public void ExecuteAction(Action newAction) {
+            if (currentAction != null) {
+                currentAction.Interrupt();
+                currentAction = null;
+            }
+            actionQueue.Clear();
+            QueueAction(newAction);
+        }
+
         /**
          * Removes action from queue if it is not started yet, does nothing otherwise
          */
