@@ -20,7 +20,7 @@ namespace DiabloKiller {
             return true;
         }
 
-        public override bool CanCastOnCharacter(Character targetCharacter) {
+        public override bool CanCastOnCharacter(Character targetCharacter, bool forceStillCast) {
             return true;
         }
 

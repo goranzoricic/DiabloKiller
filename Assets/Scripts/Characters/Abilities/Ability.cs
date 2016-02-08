@@ -29,7 +29,7 @@ namespace DiabloKiller {
             return false;
         }
 
-        public virtual bool CanCastOnCharacter(Character targetCharacter) {
+        public virtual bool CanCastOnCharacter(Character targetCharacter, bool forceStillCast) {
             return false;
         }
 

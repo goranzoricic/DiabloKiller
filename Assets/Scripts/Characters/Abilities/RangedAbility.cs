@@ -20,11 +20,11 @@ namespace DiabloKiller {
             return forceStillCast;
         }
 
-        public override bool CanCastOnCharacter(Character targetCharacter) {
+        public override bool CanCastOnCharacter(Character targetCharacter, bool forceStillCast) {
             if (targetCharacter.tag == "Enemy") {
                 return true;
             }
-            return false;
+            return forceStillCast;
         }
 
         // Use this for initialization
