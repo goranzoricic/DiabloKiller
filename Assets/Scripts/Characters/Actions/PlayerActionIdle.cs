@@ -11,11 +11,11 @@ namespace DiabloKiller {
 
         // ----------------------- Virtual methods -------------------------
 
-        protected virtual ActionState DoExecute() {
+        protected override ActionState DoExecute() {
             return ActionState.Running;
         }
 
-        protected virtual ActionState DoInterrupt() {
+        protected override ActionState DoInterrupt() {
             return ActionState.CompletedSuccess;
         }
     }

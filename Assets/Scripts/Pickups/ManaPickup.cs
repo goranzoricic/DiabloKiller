@@ -14,7 +14,8 @@ namespace DiabloKiller {
             base.OnTriggerEnter(other);
 
             PlayerCharacter character = other.GetComponent<PlayerCharacter>();
-            character.CharacterResources().ReceiveMana(ManaAmmount);
+            character.CharacterSheet().ReceiveResource(CharacterResources.Mana, ManaAmmount);
         }
     }
-}
+} 
+ 

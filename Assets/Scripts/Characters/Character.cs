@@ -17,7 +17,7 @@ namespace DiabloKiller {
         protected AbilityController abilityController;
         protected BuffController buffController;
 
-        protected CharacterResources characterResources;
+        protected CharacterSheet characterSheet;
 
         // Use this for initialization
         public virtual void Start() {
@@ -26,9 +26,8 @@ namespace DiabloKiller {
             abilityController = new AbilityController(this);
             buffController = new BuffController(this);
 
-            characterResources = gameObject.GetComponent<CharacterResources>();
-            characterResources.SetOwner(this);
-            characterResources.Init();
+            // creaate empty character sheet, to be populated by derived classes
+            characterSheet = new CharacterSheet();
 
             characterMovement = new CharacterMovement();
             characterMovement.SetOwner(this);
@@ -50,6 +49,10 @@ namespace DiabloKiller {
         public virtual void StartAction(Action action) {
             // TODO fix this
             //actionController.StartAction(action);
+        }
+
+        public CharacterSheet CharacterSheet() {
+            return characterSheet;
         }
     }
 }
