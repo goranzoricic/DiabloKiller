@@ -17,6 +17,7 @@ namespace DiabloKiller {
         // Update is called once per frame
         public override void Update() {
             base.Update();
+
             if (MovementAllowed != true) {
                 return;
             }
@@ -29,25 +30,13 @@ namespace DiabloKiller {
                 navMeshAgent.destination = player.transform.position;
                 navMeshAgent.Resume();
             }
-
         }
 
         public override void OnDeath() {
             base.OnDeath();
             MovementAllowed = false;
-
-            // rotate cylinder on death
-            Transform t = gameObject.transform;
-            t.Rotate(90f, 0f, 0f);
-            Renderer renderer = gameObject.GetComponent<Renderer>();
-            renderer.material.color = Color.red;
-
-            // spawn health pickup when enemy dies
-            Vector3 newPosition = t.position;
-            GameObject newObject = SpawnLoot.Spawn();
-            newObject.transform.position = newPosition;
-
-            Destroy(t.gameObject);
+            LootManager.Instance.QueueLoot(transform);
+            Destroy(gameObject);
         }
 
     }

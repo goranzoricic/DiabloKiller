@@ -6,6 +6,7 @@ namespace DiabloKiller {
         public long HealthAmmount;
 
         public override void OnTriggerEnter(Collider other) {
+            Debug.LogFormat("[HealthAmmount.OnTriggerEnter] Health received by {0}, ammount: {1}", other.gameObject.name, HealthAmmount);
             if (!CanPickup(other)) {
                 return;
             }

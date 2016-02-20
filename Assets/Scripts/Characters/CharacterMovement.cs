@@ -96,7 +96,6 @@ namespace DiabloKiller {
             }
             Vector3 direction = destination - owner.transform.position;
             float distance = direction.magnitude;
-            Debug.LogFormat("asdfsafasdfasdf {0}", distance);
             if (!useNavigation && !stoppedDueToCollision) {
                 // if hit a wall some time ago (don't stop immediately to make the character look like he tried and gave up)
                 // stop the player

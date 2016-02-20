@@ -14,6 +14,12 @@ namespace DiabloKiller {
             Value = value;
         }
     }
+    public class EventDataTransform : EventData {
+        public Transform Value { get; set; }
+        public EventDataTransform(Transform value) {
+            Value = value;
+        }
+    }
 
     public class EventManager : Updateable {
         public static EventManager Instance {
