@@ -10,7 +10,6 @@ namespace DiabloKiller {
 
         private float LastDamageTime;
         private ArrayList ObjectsInArea = new ArrayList();
-        ArrayList ToDelete = new ArrayList();
 
         // Update is called once per frame
         void Update() {
@@ -18,15 +17,17 @@ namespace DiabloKiller {
             if (LastDamageTime + DamageInterval >= now) {
                 return;
             }
-            foreach (Character character in ObjectsInArea) {
+
+            Collider[] colliders = Physics.OverlapSphere(transform.position, transform.localScale.x/2);
+
+            foreach (Collider collider in colliders) {
+                if (collider.tag != DamageTargetTag) {
+                    continue;
+                }
+                Character character = collider.gameObject.GetComponent<Character>();
                 if (character != null) {
                     character.ReceiveDamage(DamagePerTick);
-                } else {
-                    ToDelete.Add(character);
                 }
-            }
-            foreach (CharacterResources resources in ToDelete) {
-                ObjectsInArea.Remove(resources);
             }
             LastDamageTime = now;
         }
@@ -37,30 +38,6 @@ namespace DiabloKiller {
                 canDamage = true;
             }
             return canDamage;
-        }
-
-        public virtual void OnTriggerEnter(Collider other) {
-            Debug.Log("**************");
-            if (!CanDamage(other)) {
-                return;
-            }
-
-            Character resource = other.gameObject.GetComponent<Character>();
-            if (resource == null) {
-                Debug.LogErrorFormat("Appliying damage to an invalid object: {0}", other.gameObject.name);
-                return;
-            }
-
-            if (!ObjectsInArea.Contains(other.gameObject)) {
-                ObjectsInArea.Add(resource);
-            }
-        }
-
-        public virtual void OnTriggerExit(Collider other) {
-            Character resource = other.gameObject.GetComponent<Character>();
-            if (ObjectsInArea.Contains(resource)) {
-                ObjectsInArea.Remove(resource);
-            }
         }
     }
 }
