@@ -128,7 +128,7 @@ namespace DiabloKiller {
             stoppedDueToCollision = dueToCollision;
             navMeshAgent.Stop();
             moving = false;
-            EventManager.Instance.TriggerEvent("CharacterStopped", new EventDataBoolean(reachedDestination));
+            EventManager.Instance.TriggerEvent(CharacterEvents.CharacterStopped, new EventDataBoolean(reachedDestination));
         }
 
         private float PathLength(NavMeshPath path) {

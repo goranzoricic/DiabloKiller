@@ -11,7 +11,7 @@ namespace DiabloKiller {
         }
 
         protected override ActionState DoExecute() {
-            EventManager.Instance.AddEventListener("CharacterStopped", OnCharacterStopped);
+            EventManager.Instance.AddEventListener(CharacterEvents.CharacterStopped, OnCharacterStopped);
             owner.characterMovement.SetDestination(targetPoint);
             return ActionState.Running;
         }
