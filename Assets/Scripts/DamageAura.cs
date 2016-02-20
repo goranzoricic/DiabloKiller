@@ -44,14 +44,14 @@ namespace DiabloKiller {
                 return;
             }
 
-            CharacterResources resource = other.gameObject.GetComponent<CharacterResources>();
-            if (resource == null) {
+            CharacterResources resources = other.gameObject.GetComponent<CharacterResources>();
+            if (resources == null) {
                 Debug.LogErrorFormat("Appliying damage to an invalid object: {0}", other.gameObject.name);
                 return;
             }
 
             if (!ObjectsInArea.Contains(other.gameObject)) {
-                ObjectsInArea.Add(resource);
+                ObjectsInArea.Add(resources);
             }
         }
 
