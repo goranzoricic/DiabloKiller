@@ -68,14 +68,14 @@ namespace DiabloKiller {
                 return;
             }
             // check if player can take damage
-            if (!characterSheet.CanReceiveDamage()) {
+            if (!CanReceiveDamage()) {
                 return;
             }
             characterSheet.SpendResource(CharacterResources.Health, damageToReceive);
             long health = GetHealth();
-            Debug.LogFormat("Health zero, dying now   -  {0}", health);
 
             if (GetHealth() <= 0) {
+                Debug.LogFormat("[Character.ReceiveHealth] Health zero, dying now!");
                 OnDeath();
             }
         }
@@ -87,10 +87,34 @@ namespace DiabloKiller {
                 return;
             }
             // check if player can recieve health
-            if (!characterSheet.CanReceiveHealth()) {
+            if (!CanReceiveHealth()) {
                 return;
             }
             characterSheet.ReceiveResource(CharacterResources.Health, healthToReceive);
+        }
+
+        public bool CanReceiveHealth() {
+            bool result = true;
+
+            // can't receive health if dead
+            CharacterResource health = characterSheet.GetResource(CharacterResources.Health);
+            if (health.CurrentAmmount <= 0) {
+                result &= false;
+            }
+
+            return result;
+        }
+
+        public bool CanReceiveDamage() {
+            bool result = true;
+
+            // can't receive damage if dead
+            CharacterResource health = characterSheet.GetResource(CharacterResources.Health);
+            if (health.CurrentAmmount <= 0) {
+                result &= false;
+            }
+
+            return result;
         }
     }
 }

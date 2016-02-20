@@ -52,28 +52,6 @@ namespace DiabloKiller {
             resources.Remove(resourceKey);
         }
 
-        public void ReceiveDamage(long damageToReceive) {
-            // check if player can take damage
-            if (!CanReceiveDamage()) {
-                return;
-            }
-
-            SpendResource(CharacterResources.Health, damageToReceive);
-        }
-
-        public void ReceiveHealth(long healthToReceive) {
-            // if healthToReceive is < 0, error, use recieve health
-            if (healthToReceive < 0) {
-                return;
-            }
-            // check if player can recieve health
-            if (!CanReceiveHealth()) {
-                return;
-            }
-
-            ReceiveResource(CharacterResources.Health, healthToReceive);
-        }
-
         public void ReceiveResource(CharacterResources resourceKey, long resourceToReceive) {
             if (resourceToReceive < 0) {
                 return;
@@ -104,29 +82,7 @@ namespace DiabloKiller {
         }
 
         // ----------------------- Private methods -------------------------
-        public bool CanReceiveHealth() {
-            bool result = true;
 
-            // can't receive health if dead
-            CharacterResource health = GetResource(CharacterResources.Health);
-            if (health.CurrentAmmount <= 0) {
-                result &= false;
-            }
-
-            return result;
-        }
-
-        public bool CanReceiveDamage() {
-            bool result = true;
-            
-            // can't receive damage if dead
-            CharacterResource health = GetResource(CharacterResources.Health);
-            if (health.CurrentAmmount <= 0) {
-                result &= false;
-            }
-
-            return result;
-        }
 
     }
 }
