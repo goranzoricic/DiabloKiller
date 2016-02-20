@@ -14,7 +14,7 @@ namespace DiabloKiller {
             base.OnTriggerEnter(other);
 
             PlayerCharacter character = other.GetComponent<PlayerCharacter>();
-            character.CharacterResources().ReceiveDamage(DamageAmmount);
+            character.characterSheet.ReceiveDamage(DamageAmmount);
         }
     }
 }

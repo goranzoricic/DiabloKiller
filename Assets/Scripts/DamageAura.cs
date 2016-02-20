@@ -18,11 +18,11 @@ namespace DiabloKiller {
             if (LastDamageTime + DamageInterval >= now) {
                 return;
             }
-            foreach (CharacterResources resources in ObjectsInArea) {
-                if (resources != null) {
-                    resources.ReceiveDamage(DamagePerTick);
+            foreach (Character character in ObjectsInArea) {
+                if (character != null) {
+                    character.ReceiveDamage(DamagePerTick);
                 } else {
-                    ToDelete.Add(resources);
+                    ToDelete.Add(character);
                 }
             }
             foreach (CharacterResources resources in ToDelete) {
@@ -40,23 +40,24 @@ namespace DiabloKiller {
         }
 
         public virtual void OnTriggerEnter(Collider other) {
+            Debug.Log("**************");
             if (!CanDamage(other)) {
                 return;
             }
 
-            CharacterResources resources = other.gameObject.GetComponent<CharacterResources>();
-            if (resources == null) {
+            Character resource = other.gameObject.GetComponent<Character>();
+            if (resource == null) {
                 Debug.LogErrorFormat("Appliying damage to an invalid object: {0}", other.gameObject.name);
                 return;
             }
 
             if (!ObjectsInArea.Contains(other.gameObject)) {
-                ObjectsInArea.Add(resources);
+                ObjectsInArea.Add(resource);
             }
         }
 
         public virtual void OnTriggerExit(Collider other) {
-            CharacterResources resource = other.gameObject.GetComponent<CharacterResources>();
+            Character resource = other.gameObject.GetComponent<Character>();
             if (ObjectsInArea.Contains(resource)) {
                 ObjectsInArea.Remove(resource);
             }

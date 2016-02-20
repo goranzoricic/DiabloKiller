@@ -26,9 +26,9 @@ namespace DiabloKiller {
 
         public override void OnCollisionEnter(Collision hit) {
             if (CanDamage(hit.gameObject)) {
-                CharacterResources resources = hit.gameObject.GetComponent<CharacterResources>();
-                if (resources != null) {
-                    resources.ReceiveDamage(Damage);
+                Character character = hit.gameObject.GetComponent<Character>();
+                if (character != null) {
+                    character.ReceiveDamage(Damage);
                 } else { 
                     Debug.LogErrorFormat("Appliying damage to an invalid object: {0}", hit.gameObject.name);
                     return;

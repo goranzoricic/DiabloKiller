@@ -9,9 +9,6 @@ namespace DiabloKiller {
          */  
         public Camera PlayerCamera;
 
-        protected CharacterStats characterStats;
-
-
         // ----------------------- Unity Overriden Methods -------------------------
         // Use this for initialization
         public override void Start() {
@@ -27,10 +24,23 @@ namespace DiabloKiller {
             SelfCastAbility battleShout = new SelfCastAbility(this, "Battle Shout");
             abilityController.AddAbility("Ability02", battleShout);
 
-            characterStats = gameObject.GetComponent<CharacterStats>();
-            characterStats.SetOwner(this);
+            // create player stats
+            CharacterStat strength = new CharacterStat(CharacterStats.Strength, 12);
+            CharacterStat agility = new CharacterStat(CharacterStats.Agility, 15);
+            CharacterStat inteligence = new CharacterStat(CharacterStats.Inteligence, 18);
+            CharacterStat vitality = new CharacterStat(CharacterStats.Vitality, 10);
+            characterSheet.AddStat(CharacterStats.Strength, strength);
+            characterSheet.AddStat(CharacterStats.Agility, agility);
+            characterSheet.AddStat(CharacterStats.Inteligence, inteligence);
+            characterSheet.AddStat(CharacterStats.Vitality, vitality);
 
-            HUDInLevel.Instance.Init(characterResources);
+            // create player resources
+            CharacterResource health = new CharacterResource(CharacterResources.Health, 50,100);
+            CharacterResource mana = new CharacterResource(CharacterResources.Mana, 50, 100);
+            characterSheet.AddResource(CharacterResources.Health, health);
+            characterSheet.AddResource(CharacterResources.Mana, mana);
+
+            HUDInLevel.Instance.Init(characterSheet);
         }
 
 
@@ -44,7 +54,7 @@ namespace DiabloKiller {
 
             ProcessInput();
             characterMovement.Update();
-        }
+        } 
 
         // ----------------------- Public methods -------------------------
         public virtual void OnTriggerEnter(Collider other) {
@@ -58,17 +68,6 @@ namespace DiabloKiller {
             // rotate cylinder on death
             Transform t = gameObject.transform;
             t.Rotate(90f, 0f, 0f);
-
-            Renderer renderer = gameObject.GetComponent<Renderer>();
-            renderer.material.color = Color.red;
-        }
-
-        public CharacterStats CharacterStats() {
-            return characterStats;
-        }
-
-        public CharacterResources CharacterResources() {
-            return characterResources;
         }
 
         public void ProcessInput() {

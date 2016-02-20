@@ -11,6 +11,14 @@ namespace DiabloKiller {
             base.Start();
             navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
             player = GameObject.FindGameObjectWithTag("Player");
+
+            // create enemy stats
+            CharacterStat power = new CharacterStat(CharacterStats.Power, 10);
+            characterSheet.AddStat(CharacterStats.Strength, power);
+            // create enemy resources
+            CharacterResource health = new CharacterResource(CharacterResources.Health, 20, 20);
+            characterSheet.AddResource(CharacterResources.Health, health);
+
             EnemyManager.Instance.AddEnemy(this);
         }
 

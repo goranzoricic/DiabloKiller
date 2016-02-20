@@ -55,6 +55,10 @@ namespace DiabloKiller {
         }
 
         public void SetDestination(Vector3 newDestination) {
+            if (!MovementAllowed) {
+                return;
+            }
+
             if ((newDestination - destination).magnitude <= 0.1f) {
                 return;
             }

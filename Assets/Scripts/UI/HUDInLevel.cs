@@ -23,7 +23,6 @@ namespace DiabloKiller {
             return instance;
         }
 
-
         public Slider healthSlider;                                 // Reference to the UI's health bar.
         public Slider manaSlider;                                   // Reference to the UI's mana bar.
         public Image damageImage;                                   // Reference to an image to flash on the screen on being hurt.
@@ -31,7 +30,7 @@ namespace DiabloKiller {
         public float flashSpeed = 5f;                               // The speed the damageImage will fade at.
         public Color flashColour = new Color(1f, 0f, 0f, 0.1f);     // The colour the damageImage is set to, to flash.
 
-        CharacterResources playerResources;                         // Reference to player resources script
+        CharacterSheet characterSheet;                              // Reference to player character sheet
 
         // Use this for initialization
         void Start() {
@@ -41,23 +40,26 @@ namespace DiabloKiller {
         void Awake() {
         }
 
-
         void Update() {
-            healthSlider.maxValue =  playerResources.maxHealth;
-            manaSlider.maxValue =  playerResources.maxMana;
-            healthSlider.value =  playerResources.currentHealth;
-            manaSlider.value =  playerResources.currentMana;
+            CharacterResource health = characterSheet.GetResource(CharacterResources.Health);
+            CharacterResource mana = characterSheet.GetResource(CharacterResources.Mana);
+
+            healthSlider.maxValue = health.MaxAmmount;
+            manaSlider.maxValue = mana.MaxAmmount;
+            healthSlider.value = health.CurrentAmmount;
+            manaSlider.value =  mana.CurrentAmmount;
         }
 
-        public void Init(CharacterResources resources) {
-            playerResources = resources;
-            Debug.LogFormat("[HUDInLevel.Init] Initalizing HUD, maxHealh: {0}, maxMana: {1}, health: {2}, mana: {3} ", playerResources.maxHealth ,  playerResources.maxMana,  playerResources.currentHealth,  playerResources.currentMana);
-            healthSlider.maxValue =  playerResources.maxHealth;
-            manaSlider.maxValue =  playerResources.maxMana;
-            healthSlider.value =  playerResources.currentHealth;
-            manaSlider.value =  playerResources.currentMana;
+        public void Init(CharacterSheet characterSheet) {
+            this.characterSheet = characterSheet;
+            CharacterResource health = characterSheet.GetResource(CharacterResources.Health);
+            CharacterResource mana = characterSheet.GetResource(CharacterResources.Mana);
+            Debug.LogFormat("[HUDInLevel.Init] Initalizing HUD, maxHealh: {0}, maxMana: {1}, health: {2}, mana: {3} ", health.MaxAmmount, mana.MaxAmmount, health.CurrentAmmount, mana.CurrentAmmount);
+            healthSlider.maxValue = health.MaxAmmount;
+            manaSlider.maxValue = mana.MaxAmmount;
+            healthSlider.value = health.CurrentAmmount;
+            manaSlider.value = mana.CurrentAmmount;
         }
-
 
         public void Death() {
         }
