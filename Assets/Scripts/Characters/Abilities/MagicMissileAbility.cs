@@ -12,7 +12,7 @@ namespace DiabloKiller {
         }
 
         public override bool CanCastOnPoint(bool forceStillCast) {
-            return true;
+            return forceStillCast;
         }
 
         // Use this for initialization

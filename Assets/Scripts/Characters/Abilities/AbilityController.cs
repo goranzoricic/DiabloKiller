@@ -3,6 +3,10 @@ using System.Collections.Generic;
 
 namespace DiabloKiller {
     public class AbilityController {
+        private const float GLOBAL_COOLDOWN = 0.3f;
+
+        private float nextAbilityTime = 0.0f;
+
         private Dictionary<string, Ability> abilities;
  //       private Character owner;
 
@@ -19,13 +23,15 @@ namespace DiabloKiller {
         public void Update() {
         }
 
-        public void UseAbility(string abilityName) {
-            Ability ability = abilities[abilityName];
-            if (ability == null) {
-                Debug.LogErrorFormat("[AbilityController.UseAbility] Character attemted to use an ability it doesn't have: {0}", abilityName);
-                return;
+        public bool IsAbilityReady(Ability ability) {
+            if (IsOffGlobalCooldown()) {
+                return true;
             }
-            ability.Start();
+            return false;
+        }
+
+        public void OnUseAbility(Ability ability) {
+            StartGlobalCooldown();
         }
 
         public void OnDeath() {
@@ -55,6 +61,16 @@ namespace DiabloKiller {
 
             return abilityFromInput;
         }
-    };
 
+        private void StartGlobalCooldown() {
+            nextAbilityTime = Time.time + GLOBAL_COOLDOWN;
+        }
+
+        private bool IsOffGlobalCooldown() {
+            if (Time.time > nextAbilityTime) {
+                return true;
+            }
+            return false;
+        }
+    };
 }

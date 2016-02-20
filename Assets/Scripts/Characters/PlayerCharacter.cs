@@ -77,25 +77,29 @@ namespace DiabloKiller {
                 return;
             }
 
+            bool abilityReady = abilityController.IsAbilityReady(usedAbility);
+            if (!abilityReady) {
+                return;
+            }
+
+            bool forceStillCast = Input.GetButton("ForceStillCast");
+            Ray ray = PlayerCamera.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            bool hitSomething = Physics.Raycast(ray, out hit, 100) && !hit.collider.CompareTag("Player");
+
             Action newAction = null;
             if (usedAbility.CanCastOnSelf()) {
                 newAction = new PlayerActionUseAbility(this, usedAbility, false);
-            } else {
-                bool forceStillCast = Input.GetButton("ForceStillCast");
-                Ray ray = PlayerCamera.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-                bool hitSomething = Physics.Raycast(ray, out hit, 100) && !hit.collider.CompareTag("Player");
-                if (hitSomething) {
-                    if ((hit.collider.CompareTag("Floor") || hit.collider.CompareTag("Wall")) && usedAbility.CanCastOnPoint(forceStillCast)) {
-                        usedAbility.SetTarget(hit.point);
-                        newAction = new PlayerActionUseAbility(this, usedAbility, forceStillCast);
-                    } else if (hit.collider.CompareTag("Enemy") && usedAbility.CanCastOnCharacter(hit.collider.gameObject.GetComponent<Character>(), forceStillCast)) {
-                        Character target = hit.collider.gameObject.GetComponent<Character>();
-                        usedAbility.SetTarget(target);
-                        newAction = new PlayerActionUseAbility(this, usedAbility, forceStillCast);
-                    } else if (!forceStillCast) {
-                        newAction = new MoveToPointAction(this, hit.point);
-                    }
+            } else if (hitSomething) {
+                if ((hit.collider.CompareTag("Floor") || hit.collider.CompareTag("Wall")) && usedAbility.CanCastOnPoint(forceStillCast)) {
+                    usedAbility.SetTarget(hit.point);
+                    newAction = new PlayerActionUseAbility(this, usedAbility, forceStillCast);
+                } else if (hit.collider.CompareTag("Enemy") && usedAbility.CanCastOnCharacter(hit.collider.gameObject.GetComponent<Character>(), forceStillCast)) {
+                    Character target = hit.collider.gameObject.GetComponent<Character>();
+                    usedAbility.SetTarget(target);
+                    newAction = new PlayerActionUseAbility(this, usedAbility, forceStillCast);
+                } else if (!forceStillCast) {
+                    newAction = new MoveToPointAction(this, hit.point);
                 }
             }
 

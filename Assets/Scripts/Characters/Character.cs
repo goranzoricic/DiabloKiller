@@ -49,6 +49,10 @@ namespace DiabloKiller {
             //actionController.StartAction(action);
         }
 
+        public void OnUseAbility(Ability ability) {
+            abilityController.OnUseAbility(ability);
+        }
+
         public CharacterSheet characterSheet {
             get;
             private set;

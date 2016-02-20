@@ -19,6 +19,7 @@ namespace DiabloKiller {
 
         protected override ActionState DoExecute() {
             ability.Start();
+            owner.OnUseAbility(ability);
             return ActionState.CompletedSuccess;
         }
 

@@ -44,7 +44,7 @@ namespace DiabloKiller {
             if (state != ActionState.Queued) {
                 throw new System.Exception("Wrong state (" + state + "). Only actions in Queued state can be executed.");
             }
-            Debug.Log("[Action.Execute] action executed: " + this.GetType());
+            // Debug.Log("[Action.Execute] action executed: " + this.GetType());
             state = DoExecute();
 
             // if action type is Instant finish it imediatelly, otherwise wait for future Finish() method call
