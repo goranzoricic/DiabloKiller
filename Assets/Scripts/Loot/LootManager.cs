@@ -27,8 +27,8 @@ namespace DiabloKiller {
         }
 
         public void QueueLoot(Transform target) {
-            spawnTime = Time.time + 0.1f;
-            spawnTarget = target.position + new Vector3(2, 0, 0);
+            spawnTime = Time.time;
+            spawnTarget = target.position;
         }
 
         public void OnEnemyDied(EventData eventData) {
