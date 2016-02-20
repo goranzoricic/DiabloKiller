@@ -10,7 +10,7 @@ namespace DiabloKiller {
 
         }
         public void RegisterForUpdates() {
-            GameObject updaterObject = GameObject.Find("GlobalUpdater");
+            GameObject updaterObject = GameObject.FindGameObjectWithTag("GlobalUpdater");
             if (!updaterObject) {
                 Object updaterPrefab = Resources.Load("Prefabs/GlobalUpdater");
                 updaterObject = (GameObject)Object.Instantiate(updaterPrefab);
