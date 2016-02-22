@@ -1,0 +1,26 @@
+<LootTables>
+  <LootTable name="Easy">
+    <Loot>
+      <Chance>70</Chance>
+      <Quantity>1</Quantity>
+      <GameObject>Prefabs/Pickups/HealthPickup</GameObject>
+    </Loot>
+    <Loot>
+      <Chance>70</Chance>
+      <Quantity>1</Quantity>
+      <GameObject>Prefabs/Pickups/ManaPickup</GameObject>
+    </Loot>
+  </LootTable>
+  <LootTable name="Medium">
+    <Loot>
+      <Chance>70</Chance>
+      <Quantity>2</Quantity>
+      <GameObject>Prefabs/Pickups/HealthPickup</GameObject>
+    </Loot>
+    <Loot>
+      <Chance>70</Chance>
+      <Quantity>2</Quantity>
+      <GameObject>Prefabs/Pickups/ManaPickup</GameObject>
+    </Loot>
+  </LootTable>  
+</LootTables>

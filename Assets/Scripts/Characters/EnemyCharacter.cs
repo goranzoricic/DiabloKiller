@@ -5,6 +5,7 @@ namespace DiabloKiller {
     public class EnemyCharacter : Character {
 
         GameObject player;
+        public LootTableType lootTableType;
 
         // Use this for initialization
         public override void Start() {
@@ -40,8 +41,11 @@ namespace DiabloKiller {
             }
         }
 
-        public override void OnDeath() {
+        public override void OnDeath() { 
             base.OnDeath();
+
+            Debug.LogFormat("[EnemyCharacter.OnDeath]");
+
             MovementAllowed = false;
             LootManager.Instance.QueueLoot(transform);
             Destroy(gameObject);
