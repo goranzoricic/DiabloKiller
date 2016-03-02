@@ -23,7 +23,7 @@ namespace DiabloKiller {
             TurnToTarget();
 
             Vector3 direction = owner.transform.forward;
-            direction.y = 0;
+            direction.y = owner.transform.position.y + 1.0f;
             direction.Normalize();
             Vector3 position = owner.transform.position + direction * range;
 
