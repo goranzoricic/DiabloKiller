@@ -1,18 +1,25 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
-using System;
 
 namespace DiabloKiller {
-    public class MoveToPointAction : Action {
-        private Vector3 targetPoint;
+    public class MoveToTargetAction : Action {
+        private GameObject targetObject;
+        private float range;
+        private System.Action<bool> completeCallback;
 
-        public MoveToPointAction(Character owner, Vector3 targetPoint) : base(owner) {
-            this.targetPoint = targetPoint;
+        public MoveToTargetAction(Character owner, GameObject targetObject, float range = 2.0f) : base(owner) {
+            this.targetObject = targetObject;
+            this.range = range;
+            completeCallback = null;
+        }
+
+        public void SetCompleteCallback(System.Action<bool> callback) {
+        	completeCallback = callback;
         }
 
         protected override ActionState DoExecute() {
             EventManager.Instance.AddEventListener(CharacterEvents.CharacterStopped, OnCharacterStopped);
-            owner.characterMovement.SetDestination(targetPoint);
+            owner.characterMovement.SetDestination(targetObject, range);
             return ActionState.Running;
         }
 
@@ -28,6 +35,9 @@ namespace DiabloKiller {
 
         public void OnCharacterStopped(EventData eventData) {
             if (((EventDataBoolean)eventData).Value) {
+            	if (completeCallback != null) {
+            		completeCallback(true);
+            	}
                 state = ActionState.CompletedSuccess;
             } else {
                 state = ActionState.CompletedFail;

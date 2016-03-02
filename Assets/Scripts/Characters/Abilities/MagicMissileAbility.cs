@@ -11,12 +11,8 @@ namespace DiabloKiller {
         	}
         }
 
-        public override bool CanCastOnPoint(bool forceStillCast) {
-            return forceStillCast;
-        }
-
         // Use this for initialization
-        public override void Start() {
+        public override void Start(bool forceStillCast) {
             Debug.Log("[MagicMissileAbility.Start]");
 
             Vector3 direction = targetPoint - owner.transform.position;

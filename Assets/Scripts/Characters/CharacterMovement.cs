@@ -3,6 +3,12 @@ using System.Collections;
 
 namespace DiabloKiller {
 	public class CharacterMovement {
+        enum MovementMode {
+            NotMoving,
+            ToPoint,
+            ToObject,
+        }
+
         public bool MovementAllowed {
         	get { return movementAllowed; }
         	set { SetMovementAllowed(value); }
@@ -15,6 +21,10 @@ namespace DiabloKiller {
 
         private NavMeshPath navPath;
         private Vector3 destination;
+        private GameObject targetObject;
+        private float range;
+
+        private MovementMode currentMode;
 
         private const float stopDelayAfterContact = 1.0f;
         private float lastContactTime = 0.0f;
@@ -22,7 +32,6 @@ namespace DiabloKiller {
 
         private const float maxPathingRatio = 1.5f;
         private bool useNavigation = true;
-        private bool moving = false;
 
         // ----------------------- Public Methods -------------------------
         public void Init() {
@@ -31,6 +40,7 @@ namespace DiabloKiller {
             navPath = new NavMeshPath();
             destination = owner.transform.position;
             body = owner.gameObject.GetComponent<Rigidbody>();
+            currentMode = MovementMode.NotMoving;
         }
 
         public void SetOwner(Character owner) {
@@ -43,7 +53,7 @@ namespace DiabloKiller {
 
         private void SetMovementAllowed(bool allowed) {
         	movementAllowed = allowed;
-            if (moving && !movementAllowed) {
+            if (IsMoving() && !movementAllowed) {
                 Stop(false, false);
             }
         }
@@ -52,6 +62,40 @@ namespace DiabloKiller {
             if (!useNavigation && other.tag == "Wall") {
                 lastContactTime = Time.time;
             }
+        }
+
+        public void SetDestination(GameObject targetObject, float range = 2.0f) {
+            if (!MovementAllowed) {
+                return;
+            }
+
+            stoppedDueToCollision = false;
+            lastContactTime = float.MaxValue;
+            useNavigation = false;
+
+            this.targetObject = targetObject;
+            this.range = range;
+
+            NavMesh.CalculatePath(owner.transform.position, targetObject.transform.position, NavMesh.AllAreas, navPath);
+            if (navPath.status == NavMeshPathStatus.PathComplete) {
+                float pathLength = PathLength(navPath);
+                float distance = (owner.transform.position - targetObject.transform.position).magnitude;
+                distance = Mathf.Clamp(distance - range, 0.0f, Mathf.Abs(distance));
+                float pathRatio = (pathLength / distance) * (pathLength / distance);
+                if (pathRatio < maxPathingRatio) {
+                    body.velocity = Vector3.zero;
+                    navMeshAgent.SetPath(navPath);
+                    navMeshAgent.Resume();
+                    useNavigation = true;
+                } else {
+                    navMeshAgent.Stop();
+                }
+            } else {
+                // pathing was to slow - TODO: Fix this
+                navMeshAgent.Stop();
+            }
+
+            currentMode = MovementMode.ToObject;
         }
 
         public void SetDestination(Vector3 newDestination) {
@@ -65,6 +109,7 @@ namespace DiabloKiller {
             stoppedDueToCollision = false;
             lastContactTime = float.MaxValue;
             useNavigation = false;
+
             destination = newDestination;
 
             NavMesh.CalculatePath(owner.transform.position, destination, NavMesh.AllAreas, navPath);
@@ -84,7 +129,7 @@ namespace DiabloKiller {
                 // pathing was to slow - TODO: Fix this
                 navMeshAgent.Stop();
             }
-            moving = true;
+            currentMode = MovementMode.ToPoint;
         }
 
         // Moves the character towards the last clicked location. Finds the navigation path to the target, but won't use it if
@@ -92,14 +137,16 @@ namespace DiabloKiller {
         // is that the player has to guide the character around obstacles, while not requiring the player to be absolutely
         // precise while moving.
         public void Update() {
-            if (!MovementAllowed || !moving) {
+            if (!MovementAllowed || !IsMoving()) {
                 return;
             }
-            if (navMeshAgent == null) {
-                return;
+            // if moving to an object, but it doesn't exist (e.g. it was destroyed)
+            if (currentMode == MovementMode.ToObject && targetObject == null) {
+                Stop(true, false);
             }
-            Vector3 direction = destination - owner.transform.position;
-            float distance = direction.magnitude;
+
+            float distance = 0.0f;
+            Vector3 direction = DesiredDirection(out distance);
             if (!useNavigation && !stoppedDueToCollision) {
                 // if hit a wall some time ago (don't stop immediately to make the character look like he tried and gave up)
                 // stop the player
@@ -109,8 +156,9 @@ namespace DiabloKiller {
                     // if no wall was hit, move him directly to the destination
                 } else {
                     if (distance > 0.1f) {
-                        direction.Normalize();
                         body.velocity = direction * navMeshAgent.speed;
+                        Quaternion rotation = Quaternion.LookRotation(direction);
+                        owner.transform.rotation = rotation;            
                     } else {
                         Stop(true, false);
                     }
@@ -127,8 +175,28 @@ namespace DiabloKiller {
             destination = owner.transform.position;
             stoppedDueToCollision = dueToCollision;
             navMeshAgent.Stop();
-            moving = false;
+            currentMode = MovementMode.NotMoving;
             EventManager.Instance.TriggerEvent(CharacterEvents.CharacterStopped, new EventDataBoolean(reachedDestination));
+        }
+
+        private bool IsMoving() {
+            return currentMode != MovementMode.NotMoving;
+        }
+
+        private Vector3 DesiredDirection(out float distance) {
+            Vector3 direction = new Vector3(0, 0, 0);
+
+            if (currentMode == MovementMode.ToPoint) {
+                direction = destination - owner.transform.position;
+            } else if (currentMode == MovementMode.ToObject) {
+                direction = targetObject.transform.position - owner.transform.position;
+            }
+            direction.y = 0;
+            distance = direction.magnitude;
+            if (currentMode == MovementMode.ToObject) {
+                distance = Mathf.Clamp(distance - range, 0.0f, Mathf.Abs(distance));
+            }
+            return direction.normalized;
         }
 
         private float PathLength(NavMeshPath path) {

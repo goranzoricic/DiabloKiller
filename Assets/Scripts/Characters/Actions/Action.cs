@@ -32,6 +32,7 @@ namespace DiabloKiller {
 
         protected abstract ActionState DoExecute();
         protected abstract ActionState DoInterrupt();
+        protected abstract ActionState DoFinish();
 
         // ----------------------- Constructors methods -------------------------
         protected Action(Character owner) {
@@ -58,7 +59,10 @@ namespace DiabloKiller {
                 throw new System.Exception("Wrong state (" + state + "). Only actions in Running state can be interrupted.");
             }
             state = DoInterrupt();
-            doFinish();
+        }
+
+        public void Finish() {
+            DoFinish();
         }
 
         public ActionState State() {
@@ -66,9 +70,5 @@ namespace DiabloKiller {
         }
 
         // ----------------------- Private methods -------------------------
-
-        public void doFinish() {
-            state = ActionState.CompletedSuccess;
-        }
     }
 }

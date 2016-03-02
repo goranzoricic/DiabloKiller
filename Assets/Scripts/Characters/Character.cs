@@ -44,9 +44,8 @@ namespace DiabloKiller {
             //actionController.OnDeath();
         }
 
-        public virtual void StartAction(Action action) {
-            // TODO fix this
-            //actionController.StartAction(action);
+        public virtual void QueueAction(Action action) {
+            actionController.QueueAction(action);
         }
 
         public void OnUseAbility(Ability ability) {

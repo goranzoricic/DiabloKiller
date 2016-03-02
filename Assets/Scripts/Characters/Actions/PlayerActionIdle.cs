@@ -18,5 +18,9 @@ namespace DiabloKiller {
         protected override ActionState DoInterrupt() {
             return ActionState.CompletedSuccess;
         }
+ 
+        protected override ActionState DoFinish() {
+            return ActionState.CompletedSuccess;
+        }
     }
 }

@@ -18,12 +18,16 @@ namespace DiabloKiller {
         // ----------------------- Virtual methods -------------------------
 
         protected override ActionState DoExecute() {
-            ability.Start();
+            ability.Start(forceStillCast);
             owner.OnUseAbility(ability);
             return ActionState.CompletedSuccess;
         }
 
         protected override ActionState DoInterrupt() {
+            return ActionState.CompletedSuccess;
+        }
+ 
+        protected override ActionState DoFinish() {
             return ActionState.CompletedSuccess;
         }
     }

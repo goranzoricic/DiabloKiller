@@ -12,7 +12,7 @@ namespace DiabloKiller {
         }
 
         // Use this for initialization
-        public override void Start() {
+        public override void Start(bool forceStillCast) {
 
         }
 

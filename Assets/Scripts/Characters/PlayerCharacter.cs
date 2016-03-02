@@ -15,12 +15,15 @@ namespace DiabloKiller {
             base.Start();
 
             // create player abilities
-            MeleeAbility cleave = new MeleeAbility(this, "Cleave");
+            MeleeAbility cleave = new CleaveAbility(this, "Cleave");
             abilityController.AddAbility("Primary", cleave);
+
             RangedAbility magicMissile = new MagicMissileAbility(this, "Magic Missile");
             abilityController.AddAbility("Secondary", magicMissile);
+
             AreaAbility avalanche = new AreaAbility(this, "Avalanche");
             abilityController.AddAbility("Ability01", avalanche);
+            
             SelfCastAbility battleShout = new SelfCastAbility(this, "Battle Shout");
             abilityController.AddAbility("Ability02", battleShout);
 

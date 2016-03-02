@@ -37,6 +37,7 @@ namespace DiabloKiller {
                     case ActionState.CompletedSuccess:
                     case ActionState.CompletedFail:
                         {
+                            currentAction.Finish();
                             // Debug.Log("[ActionController.Update] action completed: " + currentAction.GetType());
                             ExecuteNextAction();
                             break;

@@ -20,5 +20,9 @@ namespace DiabloKiller {
         protected override ActionState DoInterrupt() {
             throw new NotImplementedException();
         }
-    }
+ 
+        protected override ActionState DoFinish() {
+            throw new NotImplementedException();
+        }
+   }
 }
