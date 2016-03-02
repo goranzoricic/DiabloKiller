@@ -78,7 +78,7 @@ namespace DiabloKiller {
                                 Debug.LogFormat(" Dropping loot: " + i + "    " + loot.gameObject);
 
                                 GameObject lootDrop = (GameObject)Resources.Load(loot.gameObject);
-                                spawnTarget = target.position + new Vector3(Random.Range(0, 4), 0, Random.Range(0, 4));
+                                spawnTarget = target.position + new Vector3(Random.Range(-2, 2), 0, Random.Range(-2, 2));
                                 GameObject.Instantiate(lootDrop, spawnTarget, Quaternion.identity);
                             }
                         }
